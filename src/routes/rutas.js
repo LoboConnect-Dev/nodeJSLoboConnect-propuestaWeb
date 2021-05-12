@@ -3,7 +3,7 @@ const ruta = express.Router(); //Para las rutas
 module.exports = ruta; //Para exportar esta función o constante
 
 
-/* INICIO DE SESIÓN - PRIMERAS PÁGINAS ----------------------------------- */
+/* FORMULARIO DE INICIO DE SESIÓN - PRIMERAS PÁGINAS ----------------------------------- */
 ruta.get('/', (req, res) => {
     res.render('login');
 });
@@ -26,5 +26,5 @@ ruta.get('/avisosGestion', (req, res) => {
 
 //PRUEBA PERFIL
 ruta.get('/profil', (req, res) => {
-    res.render('perfilAislado');
+    res.render('profilPage');
 })

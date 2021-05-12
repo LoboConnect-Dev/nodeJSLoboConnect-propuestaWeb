@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/profilCard.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Perfil</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-blueObsc">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color: white;" href="/">LOBO CONNECT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuDesplegable" aria-controls="menuDesplegable" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+          </button>
+            <div class="collapse navbar-collapse" id="menuDesplegable">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/avisosGestion">Avisos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Notificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/profil">Perfil</a>
+                    </li>
+                </ul>
+                <a id="exit" class="btn ms-auto" href="/">Salir <i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+    <header class="text-center" style="background-color:rgb(20, 43, 76); color: white;">
+        <h1 class="title p-2">Perfil</h1>
+    </header>
+
+    <div class="backg">
+        <div class="color-w"></div>
+        <div class="color-b"></div>
+        <div class="log-child box-sh">
+            <div class="bgProfilImg">
+                <img src="assets/img/aviso1.jpg">
+            </div>
+            <div class="contentProfil">
+                <ul>
+                    <li><span>Nombre</span></li>
+                    <li>Emmanuel Cruz Chavero</li>
+                    <li><span>E-mail</span></li>
+                    <li> emmanuel.cruz@gmail.com</li>
+                    <li><span>Departamento</span></li>
+                    <li>Servicios Escolares</li>
+                </ul>
+                <a class="btn btn-primary" href="#">Cambiar contraseña</a>
+                <a class="btn btn-danger" href="/">Cerrar sesión</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

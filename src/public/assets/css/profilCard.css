@@ -1,0 +1,20 @@
+@import url(profilCard_util.css);
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.color-w {
+    background-color: white;
+    height: 35%;
+}
+
+.color-b {
+    background-color: rgb(20, 43, 76);
+    height: 65%;
+}

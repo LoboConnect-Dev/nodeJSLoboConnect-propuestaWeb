@@ -1,5 +1,5 @@
 //Código no bloqueante
-//Este es código asincrono, es decir que se ejecuta, sin embargo todo el demás flujo
+//Este es código asyncrono, es decir que se ejecuta, sin embargo, todo el demás flujo
 //de código se sigue ejecutando. Esta función no necesita ser terminada para
 // ejecutar lo demás
 

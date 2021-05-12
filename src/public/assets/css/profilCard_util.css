@@ -1,0 +1,128 @@
+.backg {
+    height: 90%;
+    position: relative;
+}
+
+.log-child {
+    padding: 2%;
+    background-color: white;
+    border-radius: 2rem;
+    height: 600px;
+    width: 500px;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    position: absolute;
+    z-index: 25;
+}
+
+.log-child .bgProfilImg {
+    text-align: center;
+    align-items: center;
+}
+
+.log-child .bgProfilImg img {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.log-child.box-sh {
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Barra de navegación  */
+
+.bg-blueObsc {
+    background-color: rgb(20, 43, 76);
+}
+
+li[class="nav-item"] a {
+    color: white;
+}
+
+li[class="nav-item"]:hover {
+    background-color: white;
+}
+
+i[class="fas fa-bars"] {
+    color: white;
+    font-size: 25px;
+}
+
+#exit {
+    color: white;
+}
+
+#exit:hover {
+    background-color: #dc3545;
+}
+
+
+/*Contenido */
+
+.contentProfil {
+    position: relative;
+    padding: 30px;
+}
+
+.contentProfil ul {
+    text-align: center;
+}
+
+.contentProfil ul li {
+    list-style: none;
+    padding: 5px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.0);
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+.contentProfil ul li span {
+    font-size: 15px;
+    color: rgb(70, 69, 69);
+}
+
+.contentProfil a {
+    padding-right: auto;
+    padding-left: auto;
+    display: block;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+/*Responsive */
+
+@media screen and (max-width: 1050px) {
+    .log-child {
+        height: 550px;
+        width: 450px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .log-child {
+        height: 450px;
+        width: 330px;
+    }
+    .log-child .bgProfilImg img {
+        width: 110px;
+        height: 110px;
+    }
+    .contentProfil ul li {
+        list-style: none;
+        font-size: 15px;
+    }
+    .contentProfil ul li span {
+        font-size: 12px;
+    }
+    .contentProfil {
+        padding: 15px;
+    }
+}
