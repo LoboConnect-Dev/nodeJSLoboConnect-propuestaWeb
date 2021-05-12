@@ -23,3 +23,8 @@ ruta.get('/avisos', (req, res) => {
 ruta.get('/avisosGestion', (req, res) => {
     res.render('avisosGestion');
 });
+
+//PRUEBA PERFIL
+ruta.get('/profil', (req, res) => {
+    res.render('perfilAislado');
+})
