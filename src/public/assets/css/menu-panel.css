@@ -1,0 +1,71 @@
+#hidden {
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    background: linear-gradient(#305db8, #002060);
+    color: #fff;
+    font-size: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    background: #0f3074;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    transition: all 0.2s;
+    border: 0.5px solid #0f3074;
+}
+
+.sidebar li:hover {
+    background: #153474;
+    border-left: 5px solid #eee;
+}
+
+.sidebar a:hover {
+    color: #fff;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 15px;
+}
+
+
+/* Contenido de la página */
+
+.contenido {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #fff;
+    padding: 30px;
+    transition: all 0.2s;
+}
+
+.contenido i {
+    cursor: pointer;
+    font-size: 30px;
+    color: #002060;
+}
+
+
+/*Para abrir el menú, se abre con el arhivo de JS*/
+
+.abrir {
+    transform: translateX(250px);
+}

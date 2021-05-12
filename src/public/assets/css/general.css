@@ -1,0 +1,12 @@
+@import url(fondo.css);
+@import url(formulario.css);
+@import url(menu-panel.css);
+@import url(cards.css);
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
