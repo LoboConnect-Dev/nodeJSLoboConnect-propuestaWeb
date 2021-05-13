@@ -1,0 +1,27 @@
+/* Barra de navegación  */
+
+.bg-blueObsc {
+    background-color: rgb(20, 43, 76);
+}
+
+li[class="nav-item"] a {
+    color: white;
+}
+
+li[class="nav-item"]:hover {
+    border-radius: 0.5rem;
+    background-color: white;
+}
+
+i[class="fas fa-bars"] {
+    color: white;
+    font-size: 25px;
+}
+
+#exit {
+    color: white;
+}
+
+#exit:hover {
+    background-color: #dc3545;
+}

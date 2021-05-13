@@ -1,0 +1,43 @@
+.card-bg {
+    background: rgba(115, 107, 107, 0.2);
+    border-radius: 1rem;
+    margin: 1rem;
+    border: none;
+}
+
+.card-bg:hover {
+    box-shadow: 0px 7px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/*Pantallas chicas*/
+
+.col-md-3 img[class="imgCardHistorial"] {
+    margin-top: 5%;
+    border-radius: 1rem;
+    max-width: 250px;
+}
+
+.col-md-1 a i {
+    margin: 10px;
+    font-size: 30px;
+}
+
+
+/*Pantallas grandes*/
+
+.col-md-3 img[class="imgCardHistorial displayCenter"] {
+    border-radius: 1rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 250px;
+}
+
+.col-md-1 a i[class="fas fa-bell displayCenter"] {
+    margin: 10px;
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

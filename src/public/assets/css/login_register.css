@@ -1,3 +1,5 @@
+@import url(navbar.css);
+@import url(cards_Historial.css);
 * {
     padding: 0;
     box-sizing: border-box;
@@ -9,35 +11,7 @@ body {
 }
 
 
-/* Barra de navegación  */
-
-.bg-blueObsc {
-    background-color: rgb(20, 43, 76);
-}
-
-li[class="nav-item"] a {
-    color: white;
-}
-
-li[class="nav-item"]:hover {
-    background-color: white;
-}
-
-i[class="fas fa-bars"] {
-    color: white;
-    font-size: 25px;
-}
-
-#exit {
-    color: white;
-}
-
-#exit:hover {
-    background-color: #dc3545;
-}
-
-
-/*---------------------------------------- NAVBAR */
+/*---------------------------------------- LOGIN */
 
 .wave {
     position: fixed;
@@ -66,6 +40,9 @@ i[class="fas fa-bars"] {
 .img img {
     width: 400px;
 }
+
+
+/*---------------------------------------- FORMULARIO CAPTURAR */
 
 form {
     width: 420px;
@@ -96,6 +73,9 @@ form {
 .card-capturar .input-div.one {
     margin-top: 0;
 }
+
+
+/*---------------------------------------- FORMULARIO LOGIN */
 
 .login-content {
     display: flex;
@@ -134,6 +114,9 @@ form {
     justify-content: center;
     align-items: center;
 }
+
+
+/*---------------------------------------- ESTILOS DE LOS INPUTS DE DATOS AMBOS FORMULARIOS */
 
 .i i {
     transition: .3s;
@@ -210,13 +193,15 @@ a {
     display: block;
     text-decoration: none;
     color: #999;
-    font-size: 0.9rem;
     transition: .3s;
 }
 
 a:hover {
     color: #050c3c;
 }
+
+
+/*---------------------------------------- BOTONES DE FORMULARIo */
 
 .btn-css {
     display: block;
@@ -239,6 +224,9 @@ a:hover {
 .btn-css:hover {
     background-position: right;
 }
+
+
+/* Responsive ------------------------------ */
 
 @media screen and (max-width: 1050px) {
     .container {
@@ -264,6 +252,12 @@ a:hover {
 }
 
 @media screen and (max-width: 900px) {
+    form {
+        width: 100%;
+    }
+    .card-capturar .input-div {
+        grid-template-columns: 7% 93%;
+    }
     .container {
         grid-template-columns: 1fr;
     }

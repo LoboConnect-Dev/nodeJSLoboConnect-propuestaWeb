@@ -1,5 +1,6 @@
+@import url(navbar.css);
 .backg {
-    height: 90%;
+    height: 100%;
     position: relative;
 }
 
@@ -32,37 +33,6 @@
 .log-child.box-sh {
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.3);
 }
-
-
-/* Barra de navegación  */
-
-.bg-blueObsc {
-    background-color: rgb(20, 43, 76);
-}
-
-li[class="nav-item"] a {
-    color: white;
-}
-
-li[class="nav-item"]:hover {
-    background-color: white;
-}
-
-i[class="fas fa-bars"] {
-    color: white;
-    font-size: 25px;
-}
-
-#exit {
-    color: white;
-}
-
-#exit:hover {
-    background-color: #dc3545;
-}
-
-
-/*Contenido */
 
 .contentProfil {
     position: relative;

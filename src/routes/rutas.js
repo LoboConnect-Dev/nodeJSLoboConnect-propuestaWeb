@@ -24,7 +24,23 @@ ruta.get('/avisosGestion', (req, res) => {
     res.render('avisosGestion');
 });
 
+/* PERFIL DEL USUARIO ------------------------------------------------- */
 //PRUEBA PERFIL
 ruta.get('/profil', (req, res) => {
     res.render('profilPage');
-})
+});
+
+ruta.get('/recuperarPass', (req, res) => {
+    res.render('recoveryPass');
+});
+
+ruta.get('/verificarAdmin', (req, res) => {
+    res.render('verificarAdmin');
+});
+
+/* PÁGINAS DE LA APLICACIÓN ------------------------------------- */
+// Historial
+
+ruta.get('/historial', (req, res) => {
+    res.render('historial');
+});
