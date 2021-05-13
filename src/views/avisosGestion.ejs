@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="../js/ScriptTransacciones.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/login_register.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
@@ -26,131 +27,129 @@
             <div class="collapse navbar-collapse" id="menuDesplegable">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/avisosGestion">Avisos</a>
+                        <a class="nav-link btn-outline-primary" aria-current="page" href="#">Avisos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/historial">Historial</a>
+                        <a class="nav-link btn-outline-primary" href="#">Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Notificaciones</a>
+                        <a class="nav-link btn-outline-primary" href="#">Notificaciones</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/profil">Perfil</a>
-                    </li>
+
                 </ul>
-                <a id="exit" class="btn ms-auto" href="/">Salir <i class="fas fa-sign-out-alt"></i></a>
+
+
             </div>
         </div>
     </nav>
+    <main>
+        <header class="text-center" style="background-color:rgb(20, 43, 76); color: white;">
+            <h1 class="title p-2">Gestión de avisos</h1>
+        </header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 mb-1">
+                    <div class="card mt-3 shadow" style="margin-left: 3rem;">
+                        <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
+                            Capturar
+                        </div>
+                        <div class="card-body ">
+                            <div class="card-capturar">
+                                <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
+                                <form id="enviarDatos">
+                                    <div class="input-div one">
+                                        <div class="i">
+                                            <i class="fas fa-bell"></i>
+                                        </div>
+                                        <div class="div">
+                                            <h5>Titulo</h5>
+                                            <input type="text" class="input">
+                                        </div>
+                                    </div>
+                                    <div class="input-div one">
+                                        <div class="i">
+                                            <i class="fas fa-pen"></i>
+                                        </div>
+                                        <div class="div">
+                                            <h5>Descripción</h5>
+                                            <input type="text" class="input">
+                                        </div>
+                                    </div>
 
-    <header class="text-center" style="background-color:rgb(20, 43, 76); color: white;">
-        <h1 class="title p-2">Gestión de avisos</h1>
-    </header>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4 col-md-12 mb-1">
-                <div class="card mt-3 ">
-                    <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
-                        Capturar
-                    </div>
-                    <div class="card-body ">
-                        <div class="card-capturar">
-                            <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
-                            <form id="enviarDatos">
-                                <div class="input-div one">
-                                    <div class="i">
-                                        <i class="fas fa-bell"></i>
+                                    <div class="input-div one">
+                                        <div class="i">
+                                            <i class="fas fa-camera"></i>
+                                        </div>
+                                        <div class="div">
+                                            <h5>Imagen</h5>
+                                            <input type="text" class="input">
+                                        </div>
                                     </div>
-                                    <div class="div">
-                                        <h5>Titulo</h5>
-                                        <input type="text" class="input">
-                                    </div>
-                                </div>
-                                <div class="input-div one">
-                                    <div class="i">
-                                        <i class="fas fa-pen"></i>
-                                    </div>
-                                    <div class="div">
-                                        <h5>Descripción</h5>
-                                        <input type="text" class="input">
-                                    </div>
-                                </div>
 
-                                <div class="input-div one">
-                                    <div class="i">
-                                        <i class="fas fa-camera"></i>
-                                    </div>
-                                    <div class="div">
-                                        <h5>Imagen</h5>
-                                        <input type="text" class="input">
-                                    </div>
-                                </div>
-                                <div style="color: #9d9d9d;">
-                                    <h5>Categoria</h5>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
                                                 <h6 style="color: #333;">Importante</h6>
                                             </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                    <label class="form-check-label" for="exampleRadios2">
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                        <label class="form-check-label" for="exampleRadios2">
                                                 <h6 style="color: #333;">De interes</h6>
                                             </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option3">
-                                    <label class="form-check-label" for="exampleRadios3">
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option3">
+                                        <label class="form-check-label" for="exampleRadios3">
                                                     <h6 style="color: #333;">Temporal</h6>
                                                 </label>
-                                </div>
+                                    </div>
 
-                                <div class="d-grid gap-2">
-                                    <input type="submit" class="btn btn-outline-primary btn-lg" value="Guardar">
+                                    <div class="d-grid gap-2">
+                                        <input type="submit" class="btn-css btn-outline-primary btn-lg" value="Guardar">
 
-                                </div>
+                                    </div>
 
-                            </form>
-                            <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
+                                </form>
+                                <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-9">
+                    <div class="card mt-3 shadow">
+                        <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
+                            Publicados
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover " style="position:relative">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Imagen</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Categoria</th>
+                                        <th colspan="2" scope="col">Editar/Borrar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productos">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-9">
-                <div class="card mt-3">
-                    <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
-                        Publicados
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Imagen</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Descripción</th>
-                                    <th scope="col">Categoria</th>
-                                    <th colspan="2" scope="col">Editar/Borrar</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productos">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
         </div>
-
-    </div>
-
 </body>
+
+</main>
 <script type="text/javascript" src="assets/js/main.js"></script>
+<script type="text/javascript" src="assets/js/size_searchnav.js"></script>
 
 </html>
