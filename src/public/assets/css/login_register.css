@@ -77,6 +77,37 @@ form {
 
 /*---------------------------------------- FORMULARIO LOGIN */
 
+.pass-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+}
+
+.pass-content img {
+    height: 100px;
+}
+
+.pass-content h2 {
+    margin: 15px 0;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 1.9rem;
+}
+
+.pass-content .input-div {
+    position: relative;
+    display: grid;
+    grid-template-columns: 10% 93%;
+    margin: 25px 0;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+.pass-content .input-div.one {
+    margin-top: 0;
+}
+
 .login-content {
     display: flex;
     justify-content: flex-start;
@@ -135,6 +166,8 @@ form {
     color: #999;
     font-size: 18px;
     transition: .3s;
+    top: -5px;
+    font-size: 15px;
 }
 
 .input-div:before,
@@ -159,11 +192,6 @@ form {
 .input-div.focus:before,
 .input-div.focus:after {
     width: 50%;
-}
-
-.input-div.focus>div>h5 {
-    top: -5px;
-    font-size: 15px;
 }
 
 .input-div.focus>.i>i {
@@ -252,6 +280,9 @@ a:hover {
 }
 
 @media screen and (max-width: 900px) {
+    .ocultar {
+        display: none;
+    }
     form {
         width: 100%;
     }
