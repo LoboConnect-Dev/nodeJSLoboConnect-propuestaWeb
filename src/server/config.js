@@ -1,15 +1,17 @@
 const path = require('path');
-const usuarios = require('../routes/rutas');
 const session = require('express-session');
 const express = require('express');
 
+//Carpetas de rutas
+const usuarios = require('../routes/inicio');
+const sesionUser = require('../routes/sesion');
+const consultas = require('../routes/consultas');
 
 
 module.exports = app => {
 
     //Settings
     app.set('port', process.env.PORT || 3000);
-
 
     app.use(session({
         secret: "inidbprod",
@@ -23,10 +25,14 @@ module.exports = app => {
 
     //Carpeta estática
     app.use('/', express.static(path.join(__dirname, '../public')));
+    app.use('/sesion', express.static(path.join(__dirname, '../public')));
     app.use(express.urlencoded({ extended: true })); //Para recibir datos del formulario
 
     //Rutas
     app.use('/', usuarios);
+    app.use('/sesion', sesionUser);
+    app.use('/consultas', consultas);
+
 
 
     return app;

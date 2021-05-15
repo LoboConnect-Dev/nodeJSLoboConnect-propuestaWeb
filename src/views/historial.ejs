@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historial</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/login_register.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Historial</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg bg-blueObsc">
         <div class="container-fluid">
-            <a class="navbar-brand" style="color: white;" href="/">LOBO CONNECT</a>
+            <a class="navbar-brand" style="color: white;" href="#">LOBO CONNECT</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuDesplegable" aria-controls="menuDesplegable" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
           </button>
@@ -35,10 +35,10 @@
                         <a class="nav-link" href="#">Notificaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/profil">Perfil</a>
+                        <a class="nav-link " href="/perfil">Perfil</a>
                     </li>
                 </ul>
-                <a id="exit" class="btn ms-auto" href="/">Salir <i class="fas fa-sign-out-alt"></i></a>
+                <a id="exit" class="btn ms-auto" href="/exit">Salir <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
     </nav>
@@ -47,65 +47,33 @@
     </header>
     <!-- Card de historial -->
     <div class="container-md">
-
-        <div class="card mb-3 card-bg" style="max-width: 100% ">
-            <div class="row g-0 ">
-                <div class="col-md-3 text-center">
-                    <img src="assets/img/aviso1.jpg" class="imgCardHistorial displayCenter">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Reapertura de clases</h5>
-                        <h6 class="card-title">16/05/21</h6>
-                        <p class="card-text">Alfin regresamos a clases.</p>
-                        <p class="card-text"><small class="text-muted">Lapso: 13/05/2021 - 15/05/2021  </small></p>
-                        <p class="card-text"><small class="text-muted">Emmanuel Cruz - Servicios Escolares</small></p>
+        <% avisos.forEach(aviso => { %>
+            <div class="card mb-3 card-bg" style="max-width: 100% ">
+                <div class="row g-0 ">
+                    <div class="col-md-3 text-center">
+                        <img src="<%= aviso.img %> " class="imgCardHistorial displayCenter" style="max-width: 180px; max-height: 180px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= aviso.titulo  %>
+                            </h5>
+                            <h6 class="card-title">
+                                <%= aviso.fecha  %>
+                            </h6>
+                            <p class="card-text">
+                                <%= aviso.descripcion  %>
+                            </p>
+                            <p class="card-text"><small class="text-muted"><%= aviso.lapso %> </small></p>
+                            <p class="card-text"><small class="text-muted"> <%= aviso.usuario  %> - <%= aviso.departamento  %> </small></p>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="#" class="text-center mx-auto"> <i class="fas fa-bell displayCenter"></i> </a>
                     </div>
                 </div>
-                <div class="col-md-1">
-                    <a href="#" class="text-center mx-auto"><i class="fas fa-bell displayCenter"></i> </a>
-                </div>
             </div>
-        </div>
-        <div class="card mb-3 card-bg" style="max-width: 100% ">
-            <div class="row g-0 ">
-                <div class="col-md-3 text-center">
-                    <img src="assets/img/aviso2.jpg" class="imgCardHistorial displayCenter">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Reapertura de clases</h5>
-                        <h6 class="card-title">16/05/21</h6>
-                        <p class="card-text">Alfin regresamos a clases.</p>
-                        <p class="card-text"><small class="text-muted">Lapso: 13/05/2021 - 15/05/2021  </small></p>
-                        <p class="card-text"><small class="text-muted">Roberto Perez - Servicios Escolares</small></p>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <a href="#" class="text-center mx-auto"><i class="fas fa-bell displayCenter"></i> </a>
-                </div>
-            </div>
-        </div>
-        <div class="card mb-3 card-bg" style="max-width: 100% ">
-            <div class="row g-0 ">
-                <div class="col-md-3 text-center">
-                    <img src="assets/img/aviso3.jpg" class="imgCardHistorial displayCenter">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">AAAAAAAAAA</h5>
-                        <h6 class="card-title">16/05/21</h6>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, fugiat exercitationem? Earum, praesentium rem alias velit fugiat incidunt illo corrupti doloribus ullam minus asperiores quia, vitae nam eius! In, voluptates.
-                            regresamos a clases.</p>
-                        <p class="card-text"><small class="text-muted">Lapso: 13/05/2021 - 15/05/2021  </small></p>
-                        <p class="card-text"><small class="text-muted">Emilio Valdez - Servicios Escolares</small></p>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <a href="#" class="text-center mx-auto"><i class="fas fa-bell displayCenter"></i> </a>
-                </div>
-            </div>
-        </div>
+            <% }); %>
     </div>
     <script src="assets/js/size_display.js"></script>
 </body>

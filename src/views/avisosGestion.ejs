@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de avisos</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
-    <script src="../js/ScriptTransacciones.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> -->
+
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/login_register.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <title>Gestión de avisos</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg bg-blueObsc">
         <div class="container-fluid">
-            <a class="navbar-brand" style="color: white;" href="/">LOBO CONNECT</a>
+            <a class="navbar-brand" style="color: white;" href="#">LOBO CONNECT</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuDesplegable" aria-controls="menuDesplegable" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
           </button>
@@ -36,10 +41,10 @@
                         <a class="nav-link" href="#">Notificaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/profil">Perfil</a>
+                        <a class="nav-link" href="/perfil">Perfil</a>
                     </li>
                 </ul>
-                <a id="exit" class="btn ms-auto" href="/">Salir <i class="fas fa-sign-out-alt"></i></a>
+                <a id="exit" class="btn ms-auto" href="/sesion/exit">Salir <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
     </nav>
@@ -54,29 +59,49 @@
                         <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
                             Capturar
                         </div>
-                        <div class="card-body ">
+                        <div class="card-body">
                             <div class="card-capturar">
                                 <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
-                                <form action="/altaAviso" method="POST">
+                                <form action="/consultas/altaAviso" method="POST" id="aviso-capturar">
                                     <div class="input-div one">
                                         <div class="i">
                                             <i class="fas fa-bell"></i>
                                         </div>
                                         <div class="div">
                                             <h5>Titulo</h5>
-                                            <input type="text" value="<%= aviso.titulo_id %>" class=" input " id="titulo " name="titulo ">
+                                            <input type="hidden" class="input" id="id" name="id" value="<%= aviso.titulo_id %>">
+                                            <input type="text" value="<%= aviso.titulo %>" class="input" id="titulo" name="titulo" required>
                                         </div>
                                     </div>
-                                    <div class="input-div one ">
-                                        <div class="i ">
-                                            <i class="fas fa-pen "></i>
+                                    <div class="input-div one">
+                                        <div class="i">
+                                            <i class="fas fa-pen"></i>
                                         </div>
-                                        <div class="div ">
-                                            <h5>Descripción</h5>
-                                            <input type="text " value="<%= aviso.descripcion %>" class="input" id="descripcion" name="descripcion">
-                                        </div>
-                                    </div>
+                                        <div class="div">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-outline-success" style="width: 100%; " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                Abrir Descripción
+                                            </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Descripción</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <textarea name="descripcion" id="descripcion" cols="30" rows="10" form="aviso-capturar"><%= aviso.descripcion %> </textarea>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="input-div one">
                                         <div class="i">
                                             <i class="fas fa-camera"></i>
@@ -88,20 +113,29 @@
                                     </div>
                                     <div class="input-div one">
                                         <div class="i">
-                                            <i class="fas fa-camera"></i>
+                                            <i class="fas fa-calendar-day"></i>
+                                        </div>
+                                        <div class="div">
+                                            <h5>Inicio-Fin</h5>
+                                            <input type="text" class="form-control" id="lapso" name="lapso" required>
+                                        </div>
+                                        <script>
+                                            $('#lapso').daterangepicker();
+                                        </script>
+                                    </div>
+                                    <div class="input-div one">
+                                        <div class="i">
+                                            <i class="fas fa-concierge-bell"></i>
                                         </div>
                                         <select name="categoria" id="categoria" value="<%= aviso.categoria %>">
-                                            <option value="Importante">Importante</option>
-                                            <option value="De Interes">De interés</option>
-                                            <option value="Temporal">Temporal</option>
-                                        </select>
-
+                                                <option value="Importante">Importante</option>
+                                                <option value="De Interes">De interés</option>
+                                                <option value="Temporal">Temporal</option>
+                                            </select>
                                     </div>
                                     <div class="d-grid gap-2">
                                         <input type="submit" class="btn-css btn-outline-primary btn-lg" value="Guardar">
-
                                     </div>
-
                                 </form>
                                 <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
                             </div>
@@ -118,23 +152,27 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">Imagen</th>
-                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Titulo</th>
                                         <th scope="col" class="ocultar"> Descripción</th>
                                         <th scope="col" class="ocultar"> Categoria</th>
+                                        <th scope="col" class="ocultar"> Lapso</th>
                                         <th colspan="2" scope="col">Editar/Borrar</th>
                                     </tr>
                                 </thead>
                                 <% avisos.forEach(aviso => { %>
                                     <tbody id="productos">
-                                        <td> <img src="<%= aviso.img %>" style="max-width: 200px;"> </td>
+                                        <td> <img src="<%= aviso.img %>" style="max-width: 150px; max-height: 150px;"> </td>
                                         <td>
-                                            <%= aviso.titulo_id %>
+                                            <%= aviso.titulo %>
                                         </td>
                                         <td class="ocultar">
                                             <%= aviso.descripcion %>
                                         </td>
                                         <td class="ocultar">
                                             <%= aviso.categoria %>
+                                        </td>
+                                        <td class="ocultar">
+                                            <%= aviso.lapso %>
                                         </td>
                                         <td>
                                             <a href="/obtenetID/<%= aviso.titulo_id %>">
@@ -151,12 +189,11 @@
                     </div>
                 </div>
             </div>
-
         </div>
-</body>
+    </main>
 
-</main>
-<script type="text/javascript" src="assets/js/main.js"></script>
-<script type="text/javascript" src="assets/js/size_display.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/size_display.js"></script>
+</body>
 
 </html>
