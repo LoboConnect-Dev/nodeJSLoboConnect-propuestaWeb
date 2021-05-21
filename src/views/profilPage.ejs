@@ -39,12 +39,12 @@
                         <a class="nav-link " href="/perfil">Perfil</a>
                     </li>
                 </ul>
-                <a id="exit" class="btn ms-auto" href="/exit">Salir <i class="fas fa-sign-out-alt"></i></a>
+                <a id="exit" class="btn ms-auto" href="/sesion/exit">Salir <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
     </nav>
     <header class="text-center" style="background-color:rgb(20, 43, 76); color: white;">
-        <h1 class="title p-2">Perfil</h1>
+        <h3 class="title p-2">Perfil</h3>
     </header>
 
     <div class="backg">
@@ -52,19 +52,26 @@
         <div class="color-b"></div>
         <div class="log-child box-sh">
             <div class="bgProfilImg">
-                <img src="assets/img/aviso1.jpg">
+                <img src="assets/img/avatar.svg">
             </div>
             <div class="contentProfil">
                 <ul>
                     <li><span>Nombre</span></li>
-                    <li>Emmanuel Cruz Chavero</li>
+
+                    <li>
+                        <%= profile.name %>
+                    </li>
                     <li><span>E-mail</span></li>
-                    <li> emmanuel.cruz@gmail.com</li>
+                    <li>
+                        <%= profile.email %>
+                    </li>
                     <li><span>Departamento</span></li>
-                    <li>Servicios Escolares</li>
+                    <li>
+                        <%= profile.depa %>
+                    </li>
                 </ul>
-                <a class="btn btn-primary" href="#">Cambiar contraseña</a>
-                <a class="btn btn-danger" href="/exit">Cerrar sesión</a>
+                <a class="btn btn-primary" href="/sesion/cambiarPass">Cambiar contraseña</a>
+                <a class="btn btn-danger" href="/sesion/exit">Cerrar sesión</a>
             </div>
         </div>
     </div>

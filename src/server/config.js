@@ -26,14 +26,13 @@ module.exports = app => {
     //Carpeta estática
     app.use('/', express.static(path.join(__dirname, '../public')));
     app.use('/sesion', express.static(path.join(__dirname, '../public')));
+    app.use('/consultas', express.static(path.join(__dirname, '../public')));
     app.use(express.urlencoded({ extended: true })); //Para recibir datos del formulario
 
     //Rutas
     app.use('/', usuarios);
     app.use('/sesion', sesionUser);
     app.use('/consultas', consultas);
-
-
 
     return app;
 }

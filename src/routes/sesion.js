@@ -66,6 +66,7 @@ ruta.post('/verificarLogueo', (req, res) => {
             } else {
                 if (data.Item) {
                     verificarPassword(data.Item.pass);
+
                 } else {
                     advetenciaInexis.user = username;
                     res.render('mensaje', { advertencia: advetenciaInexis });
@@ -106,6 +107,58 @@ ruta.post('/verificarLogueo', (req, res) => {
     }
 });
 
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CAMBIAR CONTRASEÑA
+
+
+ruta.get('/cambiarPass', (req, res) => {
+    res.render('changePassword');
+});
+
+ruta.post('/changePass', (req, res) => {
+    var { actualPassword, newpassword } = req.body;
+
+    if (req.session.email && req.session.password) {
+        bcrypt.compare(actualPassword, req.session.password, function(err, isValid) {
+            if (isValid) {
+                modifiPass(req.session.email);
+            } else {
+                res.redirect('/modificarPasswordError')
+            }
+        });
+
+        let modifiPass = function(user_email) {
+            var passNew = newpassword;
+            req.session.password = passNew;
+
+            const salt = 10;
+            const hash = bcrypt.hashSync(passNew, salt);
+            var passNew = hash;
+
+            const params = {
+                TableName: "users_lc",
+                Key: {
+                    "email_id": user_email,
+                },
+                UpdateExpression: "set #password= :newPassword",
+                ExpressionAttributeValues: {
+                    ":newPassword": passNew,
+                },
+                ExpressionAttributeNames: {
+                    "#password": "pass",
+                },
+                ReturnValues: "UPDATED_NEW"
+            };
+            documentClient.update(params, function(err, data) {
+                if (err) {
+                    console.log("Error siguiente: ", err);
+                } else {
+                    res.redirect('/perfil');
+                }
+            });
+        }
+    }
+});
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ REGISTRAR NUEVO USUARIO
 
 ruta.post('/register', (req, res) => {

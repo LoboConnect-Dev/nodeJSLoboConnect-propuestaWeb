@@ -44,8 +44,32 @@ body {
 
 /*---------------------------------------- FORMULARIO CAPTURAR */
 
+label {
+    font-size: 25px;
+    color: rgb(115, 107, 107);
+    margin-bottom: 5px;
+}
+
 form {
     width: 420px;
+}
+
+#btn-Descripcion {
+    box-shadow: inset 0 0 0 0;
+    transition: ease-in-out all 0.2s;
+}
+
+#btn-Descripcion:hover {
+    background-color: rgb(25, 135, 84);
+}
+
+#btn-guardar {
+    box-shadow: inset 0 0 0 0;
+    transition: ease-in-out all 0.2s;
+}
+
+#btn-guardar:hover {
+    background-color: rgb(33, 98, 196);
 }
 
 .card-capturar {
@@ -72,6 +96,10 @@ form {
 
 .card-capturar .input-div.one {
     margin-top: 0;
+}
+
+form .form-group {
+    margin: 20px;
 }
 
 

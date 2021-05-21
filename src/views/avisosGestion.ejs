@@ -18,11 +18,13 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
 
     <title>Gestión de avisos</title>
 </head>
 
 <body>
+    <!-- <div style="background-color:rgb(20, 43, 76);"> -->
     <nav class="navbar navbar-expand-lg bg-blueObsc">
         <div class="container-fluid">
             <a class="navbar-brand" style="color: white;" href="#">LOBO CONNECT</a>
@@ -48,10 +50,12 @@
             </div>
         </div>
     </nav>
+    <header class="text-center pb-1" style="background-color:rgb(20, 43, 76);color: white;">
+        <h3 class="title">Gestión de avisos</h3>
+    </header>
+    <!-- </div> -->
     <main>
-        <header class="text-center" style="background-color:rgb(20, 43, 76); color: white;">
-            <h1 class="title p-2">Gestión de avisos</h1>
-        </header>
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-4 col-md-12 mb-1">
@@ -62,80 +66,67 @@
                         <div class="card-body">
                             <div class="card-capturar">
                                 <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
-                                <form action="/consultas/altaAviso" method="POST" id="aviso-capturar">
-                                    <div class="input-div one">
-                                        <div class="i">
-                                            <i class="fas fa-bell"></i>
-                                        </div>
-                                        <div class="div">
-                                            <h5>Titulo</h5>
-                                            <input type="hidden" class="input" id="id" name="id" value="<%= aviso.titulo_id %>">
-                                            <input type="text" value="<%= aviso.titulo %>" class="input" id="titulo" name="titulo" required>
-                                        </div>
+                                <form action="/consultas/altaAviso" method="POST" id="aviso-capturar" enctype="ajax multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="titulo" style="font-size: 15px;">Titulo</label>
+                                        <input type="hidden" class="form-control" id="id" name="id" value="<%= aviso.titulo_id %>">
+                                        <input type="text" value="<%= aviso.titulo %>" class="form-control" id="titulo" name="titulo" required>
                                     </div>
-                                    <div class="input-div one">
-                                        <div class="i">
-                                            <i class="fas fa-pen"></i>
-                                        </div>
-                                        <div class="div">
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-outline-success" style="width: 100%; " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                Abrir Descripción
-                                            </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Descripción</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <textarea name="descripcion" id="descripcion" cols="30" rows="10" form="aviso-capturar"><%= aviso.descripcion %> </textarea>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-
-                                                        </div>
+                                    <div class="form-group">
+                                        <label for="Descripción" style="font-size: 15px;">Descripción</label>
+                                        <button id="btn-Descripcion" type="button" class="btn btn-outline-success" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Abrir Descripción
+                                    </button>
+                                        <hr>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Descripción</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="10" form="aviso-capturar"><%= aviso.descripcion %> </textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="input-div one">
-                                        <div class="i">
-                                            <i class="fas fa-camera"></i>
-                                        </div>
-                                        <div class="div">
-                                            <h5>Imagen</h5>
-                                            <input type="text" class="input" id="img" name="img" value="<%= aviso.img %>">
+                                    <div class="form-group mb-5">
+                                        <label for="img" style="font-size: 15px;">Imagen</label>
+
+                                        <input style="width: 85%; float:left" type="text" class="form-control" value="<%= aviso.img %>" id="img" name="img">
+                                        <div style="width: 10%; float:right">
+                                            <a style="font-size: 30px;" href="javascript:window.open('/imagen','popup','width=600px,height=600px');">
+                                                <i class="fas fa-camera 7x"></i>
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="input-div one">
-                                        <div class="i">
-                                            <i class="fas fa-calendar-day"></i>
-                                        </div>
-                                        <div class="div">
-                                            <h5>Inicio-Fin</h5>
-                                            <input type="text" class="form-control" id="lapso" name="lapso" required>
-                                        </div>
+
+                                    <div class="form-group">
+                                        <label for="Inicio-Fin" style="font-size: 15px;">Inicio - Fin</label>
+                                        <input type="text" class="form-control" id="lapso" name="lapso" required>
                                         <script>
                                             $('#lapso').daterangepicker();
                                         </script>
                                     </div>
-                                    <div class="input-div one">
-                                        <div class="i">
-                                            <i class="fas fa-concierge-bell"></i>
-                                        </div>
-                                        <select name="categoria" id="categoria" value="<%= aviso.categoria %>">
-                                                <option value="Importante">Importante</option>
-                                                <option value="De Interes">De interés</option>
-                                                <option value="Temporal">Temporal</option>
-                                            </select>
+
+                                    <div class="form-group">
+                                        <label for="Inicio-Fin" style="font-size: 15px;">Categoría</label>
+                                        <select class="form-control form-select" name="categoria" id="categoria" value="<%= aviso.categoria %>">
+                                            <option value="Importante">Importante</option>
+                                            <option value="De Interes">De interés</option>
+                                            <option value="Temporal">Temporal</option>
+                                        </select>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <input type="submit" class="btn-css btn-outline-primary btn-lg" value="Guardar">
+                                        <input type="submit" class="btn btn-outline-primary btn-lg" value="Publicar" id="btn-guardar">
                                     </div>
+
                                 </form>
                                 <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
                             </div>
@@ -175,10 +166,10 @@
                                             <%= aviso.lapso %>
                                         </td>
                                         <td>
-                                            <a href="/obtenetID/<%= aviso.titulo_id %>">
+                                            <a href="/obtenerID/<%= aviso.titulo_id %>">
                                                 <h5>📝</h5>
                                             </a>
-                                            <a href="#">
+                                            <a href="/eliminar/<%= aviso.titulo_id%> ">
                                                 <h5>❌</h5>
                                             </a>
                                         </td>
@@ -194,6 +185,9 @@
 
     <script type="text/javascript" src="assets/js/main.js"></script>
     <script type="text/javascript" src="assets/js/size_display.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> -->
 </body>
 
 </html>

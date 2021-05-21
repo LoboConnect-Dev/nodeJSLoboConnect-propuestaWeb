@@ -36,7 +36,7 @@
 
 .contentProfil {
     position: relative;
-    padding: 30px;
+    padding: 25px;
 }
 
 .contentProfil ul {
@@ -64,6 +64,12 @@
     display: block;
     width: 100%;
     margin-top: 10px;
+}
+
+label {
+    color: rgb(70, 69, 69);
+    font-size: 15px;
+    margin-bottom: 15px;
 }
 
 

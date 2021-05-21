@@ -1,0 +1,415 @@
+AVISOS GESTION
+
+  
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> -->
+
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/login_register.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <title>Gestión de avisos</title>
+</head>
+
+<body>
+    <div style="background-color:rgb(20, 43, 76);">
+    <nav class="navbar navbar-expand-lg bg-blueObsc" style="box-shadow: unset;">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color: white;" href="#">LOBO CONNECT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuDesplegable" aria-controls="menuDesplegable" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+          </button>
+            <div class="collapse navbar-collapse" id="menuDesplegable">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/avisosGestion">Avisos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/historial">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Notificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/perfil">Perfil</a>
+                    </li>
+                </ul>
+                <a id="exit" class="btn ms-auto" href="/sesion/exit">Salir <i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+    <header class="text-center pb-1" style="background-color:rgb(20, 43, 76);color: white;">
+        <h3 class="title">Gestión de avisos</h3>
+    </header> 
+</div>
+    <main>
+    
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 mb-1">
+                    <div class="card mt-3 shadow" style="margin-left: 3rem;">
+                        <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
+                            Capturar
+                        </div>
+                        <div class="card-body">
+                            <div class="card-capturar">
+                                <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
+                                <form action="consultas/altaAviso" method="POST" id="aviso-capturar" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="titulo" style="font-size: 15px;">Titulo</label>
+                                        <input type="hidden" class="form-control" id="id" name="id" value="<%= aviso.titulo_id %>">
+                                        <input type="text" value="<%= aviso.titulo %>" class="form-control" id="titulo" name="titulo" required>
+                                  
+                                      </div>
+                                    
+                                    <div class="form-group">
+                                    <label for="Descripción" style="font-size: 15px;">Descripción</label>
+                                       
+                                    <button type="button" class="btn" style="width: 100%; color: rgba(64, 171, 53); background-color: transparent; box-shadow: unset;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Abrir Descripción
+                                    </button>
+                                    <hr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Descripción</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <textarea name="descripcion" id="descripcion" cols="30" rows="10" form="aviso-capturar"><%= aviso.descripcion %> </textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                           
+                                        <label for="titulo" style="font-size: 15px;">Imagen</label>
+                                          <div class="file-field input-field">
+                                              <div style="background: rgba(64, 171, 53);" class="btn">
+                                                <span ><i class="fas fa-camera"></i></span>
+                                                <input name="myImage" id="myImage" type="file">
+                                              </div>
+                                              <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text">
+                                              </div>
+                                       </div>
+                                   </div>           
+
+                                     <div class="form-group">
+                                        <label for="Inicio-Fin" style="font-size: 15px;">Inicio - Fin</label>
+                                        <input type="text" class="form-control" id="lapso" name="lapso" required>
+                                            <script>
+                                                $('#lapso').daterangepicker();
+                                            </script>
+                                        </div>
+
+                                    <div class="form-group">
+                                        <label for="Inicio-Fin" style="font-size: 15px;">Categoría</label>
+                                        <select class="form-control"name="categoria" id="categoria" value="<%= aviso.categoria %>">
+                                            <option value="Importante">Importante</option>
+                                            <option value="De Interes">De interés</option>
+                                            <option value="Temporal">Temporal</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <input type="submit" class="btn-css btn-outline-primary btn-lg" value="Guardar">
+                                    </div>
+                                    <input name="img" id="img" type="hyden" value="<%= aviso.img %>">
+                                </form>
+                                <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-9">
+                    <div class="card mt-3 shadow">
+                        <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
+                            Publicados
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover" style="position:relative; max-width: 100%;">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Imagen</th>
+                                        <th scope="col">Titulo</th>
+                                        <th scope="col" class="ocultar"> Descripción</th>
+                                        <th scope="col" class="ocultar"> Categoria</th>
+                                        <th scope="col" class="ocultar"> Lapso</th>
+                                        <th colspan="2" scope="col">Editar/Borrar</th>
+                                    </tr>
+                                </thead>
+                                <% avisos.forEach(aviso => { %>
+                                    <tbody id="productos">
+                                        <td> <img src="<%= aviso.img %>" style="max-width: 150px; max-height: 150px;"> </td>
+                                        <td>
+                                            <%= aviso.titulo %>
+                                        </td>
+                                        <td class="ocultar">
+                                            <%= aviso.descripcion %>
+                                        </td>
+                                        <td class="ocultar">
+                                            <%= aviso.categoria %>
+                                        </td>
+                                        <td class="ocultar">
+                                            <%= aviso.lapso %>
+                                        </td>
+                                        <td>
+                                            <a href="/obtenetID/<%= aviso.titulo_id %>">
+                                                <h5>📝</h5>
+                                            </a>
+                                            <a href="#">
+                                                <h5>❌</h5>
+                                            </a>
+                                        </td>
+                                    </tbody>
+                                    <% }); %>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/size_display.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+</body>
+
+</html>
+
+consultas
+/*------------------------ express -----------------------*/
+const express = require('express');
+const ruta = express.Router(); //Para las rutas
+module.exports = ruta; //Para exportar esta función o constante
+/*------------------------ express -----------------------*/
+
+/*------------------------ Extras -----------------------*/
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
+const nodemailer = require("nodemailer");
+/*------------------------ Extras -----------------------*/
+const multer = require('multer');
+const ejs = require('ejs');
+const path = require('path');
+/*------------------------AWS -----------------------*/
+const awsConfig = require('../server/awsConfKey')
+var AWS = require('aws-sdk');
+const { url } = require('inspector');
+const { Console } = require('console');
+AWS.config.update(awsConfig);
+const documentClient = new AWS.DynamoDB.DocumentClient();
+/*------------------------AWS -----------------------*/
+
+/*-------------------------------------------------------------------- RUTAS */
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ MODULO MULTER PARA SUBIR IMAGENES AL SERVIDOR
+// Set The Storage Engine
+const storage = multer.diskStorage({
+  destination: './src/public/assets/img/uploads/',
+  filename: function(req, file, cb){
+    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+// Init Upload
+const upload = multer({
+  storage: storage,
+  limits:{fileSize: 1000000},
+  fileFilter: function(req, file, cb){
+    checkFileType(file, cb);
+  }
+}).single('myImage');
+
+// Check File Type
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: Images Only!');
+  }
+}
+
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ REGISTRAR AVISOS
+
+
+ruta.post('/altaAviso', (req, res) => {
+  upload(req, res, (err) => {
+    if(err){
+      console.log(err);
+    } else {
+      if(req.file == undefined){
+        console.log("No selecciono nada")
+      } else {
+        urlImg=`assets/img/uploads/${req.file.filename}`;
+        console.log(urlImg);
+      }
+    }
+  });
+  
+  var { id, titulo, descripcion, img, categoria, lapso } = req.body;
+  var email = req.session.email;
+  var nombre = req.session.nombre;
+  var departamento = req.session.departamento;
+
+  if (id.length <= 0) id = uuidv4();
+
+  var params = {
+      TableName: "aviso_lc",
+      Key: {
+          "titulo_id": id,
+      }
+  };
+
+  documentClient.get(params, function(err, data) {
+      if (err) {
+          console.log(err);
+      } else {
+          if (data.Item === undefined) {
+              insertaNuevoAviso();
+          } else {
+              actualizaAviso();
+          }
+      }
+  });
+
+  let insertaNuevoAviso = function() {
+      var object = {
+          "titulo_id": uuidv4(),
+          "fecha": new Date().toString(),
+          "titulo": titulo,
+          "descripcion": descripcion,
+          "img": img,
+          "categoria": categoria,
+          "lapso": lapso,
+          "exist": "true",
+          "email": email,
+          "usuario": nombre,
+          "departamento": departamento
+      };
+      const params = {
+          TableName: "aviso_lc",
+          Item: object
+      };
+      documentClient.put(params, function(err, data) {
+          if (!err) {
+              console.log("Guardado correctamente");
+              res.redirect('/avisosGestion');
+          } else {
+              console.log("Error siguiente: ", err);
+          }
+      });
+  }
+
+  let actualizaAviso = function() {
+      const params = {
+          TableName: "aviso_lc",
+          Key: {
+              "titulo_id": id,
+          },
+          UpdateExpression: "set #fecha= :fecha, #titulo= :titulo ,#descripcion= :descripcion, #img= :img, #categoria= :categoria, #lapso= :lapso",
+          ExpressionAttributeValues: {
+              ":fecha": new Date().toString(),
+              ":titulo": titulo,
+              ":descripcion": descripcion,
+              ":img": img,
+              ":categoria": categoria,
+              ":lapso": lapso,
+          },
+          ExpressionAttributeNames: {
+              "#fecha": "fecha",
+              "#titulo": "titulo",
+              "#descripcion": "descripcion",
+              "#img": "img",
+              "#categoria": "categoria",
+              "#lapso": "lapso",
+          },
+          ReturnValues: "UPDATED_NEW"
+      };
+
+      documentClient.update(params, function(err, data) {
+          if (err) {
+              console.log("Error siguiente: ", err);
+          } else {
+              console.log("Actualizado correctamente ", data);
+              res.redirect('/avisosGestion');
+          }
+      });
+
+  }
+});
+
+ruta.post('/uploads', (req, res) => {
+  upload(req, res, (err) => {
+    if(err){
+      res.render('imagenex', {
+        msg: err
+      });
+    } else {
+      if(req.file == undefined){
+        res.render('imagenex', {
+          msg: 'Error: No File Selected!'
+        });
+      } else {
+        res.render('imagenex', {
+          msg: 'File Uploaded!',
+          file: `uploads/${req.file.filename}`
+        });
+        urlImg=`assets/img/uploads/${req.file.filename}`;
+        console.log(urlImg);
+      }
+    }
+  });
+});
+
+
+ruta.post('/upload', (req, res) => {
+  upload(req, res, (err) => {
+    if(err){
+      console.log(err);
+    } else {
+      if(req.file == undefined){
+        console.log("No selecciono nada")
+      } else {
+        urlImg=`assets/img/uploads/${req.file.filename}`;
+        console.log(urlImg);
+      }
+    }
+  });
+});
+

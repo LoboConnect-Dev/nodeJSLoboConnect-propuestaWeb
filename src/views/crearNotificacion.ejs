@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/login_register.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 
-    <title>Historial</title>
+    <title>Notificar</title>
 </head>
 
 <body>
@@ -43,37 +43,45 @@
         </div>
     </nav>
     <header class="text-center" style="background-color:rgb(20, 43, 76); color: white;">
-        <h3 class="title p-2">Historial</h3>
+        <h3 class="title p-2">Notificar un cambio</h3>
     </header>
     <!-- Card de historial -->
     <div class="container-md">
-        <% avisos.forEach(aviso => { %>
-            <div class="card mb-3 card-bg" style="max-width: 100% ">
-                <div class="row g-0 ">
-                    <div class="col-md-3 text-center">
-                        <img src="<%= aviso.img %> " class="imgCardHistorial displayCenter" style="max-width: 150px; max-height: 150px;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= aviso.titulo  %>
-                            </h5>
-                            <h6 class="card-title">
-                                <%= aviso.fecha  %>
-                            </h6>
-                            <p class="card-text">
-                                <%= aviso.descripcion  %>
-                            </p>
-                            <p class="card-text"><small class="text-muted"><%= aviso.lapso %> </small></p>
-                            <p class="card-text"><small class="text-muted"> <%= aviso.usuario  %> - <%= aviso.departamento  %> </small></p>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <a href="/notify/<%= aviso.titulo_id%>" class="text-center mx-auto"> <i class="fas fa-bell displayCenter"></i> </a>
+        <div class="card mb-3 card-bg" style="max-width: 100% ">
+            <div class="row g-0 ">
+                <div class="col-md-3 text-center">
+                    <img src="<%= aviso.img %> " class="imgCardHistorial displayCenter" style="max-width: 200px; max-height: 200px;">
+                </div>
+                <div class="col-md-5">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= aviso.titulo  %>
+                        </h5>
+                        <h6 class="card-title">
+                            <%= aviso.fecha  %>
+                        </h6>
+                        <p class="card-text">
+                            <%= aviso.descripcion  %>
+                        </p>
+                        <p class="card-text"><small class="text-muted"><%= aviso.lapso %> </small></p>
+                        <p class="card-text"><small class="text-muted"> <%= aviso.usuario  %> - <%= aviso.departamento  %> </small></p>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <form action="/nuevaNotificacion" method="POST" id="notificacion-capturar">
+                        <div class="form-group mb-3">
+                            <textarea class="form-control" placeholder="Escribe aquí tu comentario o petición de cambio para este aviso..." name="comentario" id="comentario" cols="40" rows="10" form="notificacion-capturar"></textarea> <br>
+                            <input type="hidden" value="<%= aviso.titulo_id  %>" id="id_aviso" name="id_aviso">
+                            <input type="hidden" value="<%= aviso.email  %>" id="correoDePropietario" name="correoDePropietario">
+                            <input type="submit" class="btn btn-outline-primary" value="Notificar" id="btn-guardar">
+                            <a style="text-align: right; text-decoration: none;" href="/historial">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <% }); %>
+
+        </div>
+
     </div>
     <script src="assets/js/size_display.js"></script>
 </body>
