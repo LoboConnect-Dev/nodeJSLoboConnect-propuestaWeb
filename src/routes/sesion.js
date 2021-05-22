@@ -123,7 +123,7 @@ ruta.post('/changePass', (req, res) => {
             if (isValid) {
                 modifiPass(req.session.email);
             } else {
-                res.redirect('/modificarPasswordError')
+                res.render('mensajePerfil');
             }
         });
 

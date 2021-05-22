@@ -84,6 +84,12 @@ ruta.post('/uploads', (req, res) => {
 });
 // ------------------------------DAR DE ALTA LOS AVISOS----------------------
 
+var currentDate = new Date().toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+}).toString();
+
 ruta.post('/altaAviso', (req, res) => {
     var { id, titulo, descripcion, img, categoria, lapso } = req.body;
     console.log("Creo que ya jala ", img);
@@ -118,10 +124,11 @@ ruta.post('/altaAviso', (req, res) => {
         }
     });
 
+
     let insertaNuevoAviso = function() {
         var object = {
             "titulo_id": uuidv4(),
-            "fecha": new Date().toString(),
+            "fecha": currentDate,
             "titulo": titulo,
             "descripcion": descripcion,
             "img": img,
@@ -156,7 +163,7 @@ ruta.post('/altaAviso', (req, res) => {
             },
             UpdateExpression: "set #fecha= :fecha, #titulo= :titulo ,#descripcion= :descripcion, #img= :img, #categoria= :categoria, #lapso= :lapso",
             ExpressionAttributeValues: {
-                ":fecha": new Date().toString(),
+                ":fecha": currentDate,
                 ":titulo": titulo,
                 ":descripcion": descripcion,
                 ":img": img,

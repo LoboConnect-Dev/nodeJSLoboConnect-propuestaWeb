@@ -32,7 +32,7 @@
                         <a class="nav-link" href="/historial">Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Notificaciones</a>
+                        <a class="nav-link" href="/notificaciones">Notificaciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/perfil">Perfil</a>
@@ -47,20 +47,22 @@
     </header>
     <!-- Card de historial -->
     <div class="container-md">
+        <h1 style="text-align: center; color: rgb(233, 96, 96); margin-top: 15px;">
+            <%= mensaje%>
+        </h1>
         <% avisos.forEach(aviso => { %>
             <div class="card mb-3 card-bg" style="max-width: 100% ">
                 <div class="row g-0 ">
-                    <div class="col-md-3 text-center">
-                        <img src="<%= aviso.img %> " class="imgCardHistorial displayCenter" style="max-width: 150px; max-height: 150px;">
+                    <div class="col-md-3">
+                        <img src="<%= aviso.img %> " class="displayCenter img-fluid rounded">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <%= aviso.titulo  %>
                             </h5>
-                            <h6 class="card-title">
-                                <%= aviso.fecha  %>
-                            </h6>
+                            <p class="card-text"><small class="text-muted">Fecha de publicación: <%= aviso.fecha  %> </small></p>
+
                             <p class="card-text">
                                 <%= aviso.descripcion  %>
                             </p>

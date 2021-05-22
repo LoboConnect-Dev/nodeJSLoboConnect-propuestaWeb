@@ -85,6 +85,45 @@ var aviso = {
     "existente": "true"
 };
 
+ruta.get('/comentarioRevisado/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    var params = {
+        TableName: "notify_lc",
+        Key: {
+            "id_notify": id,
+        }
+    };
+
+    documentClient.get(params, function(err, data) {
+        if (err) {
+            console.log("Este es el error", err);
+        } else {
+            var idAviso = data.Item.id_aviso;
+            eliminarComentario();
+            res.redirect(`/obtenerID/${idAviso}`)
+        }
+    });
+
+    let eliminarComentario = function() {
+        var params = {
+            TableName: "notify_lc",
+            Key: {
+                "id_notify": id,
+            }
+        };
+
+        documentClient.delete(params, function(err, data) {
+            if (err) {
+                console.log("Este es el error", err);
+            } else {
+                console.log("Eliminado correctamente");
+            }
+        });
+    }
+
+});
 ruta.get('/obtenerID/:id', (req, res) => {
     var id = req.params.id;
     var params = {
@@ -116,8 +155,46 @@ ruta.get('/historial', (req, res) => {
         if (err) console.log(err)
         else {
             var avisos = data.Items;
+            var a = avisos.sort(function(a, b) {
+                return new Date(a.fecha) - new Date(b.fecha);
+            });
             if (avisos == undefined) avisos = {};
-            res.render('historial', { avisos });
+
+            var mensaje = "";
+            if (avisos.length == 0) mensaje = "No hay notificaciones pendientes";
+
+            res.render('historial', { avisos: a, mensaje });
+
+        }
+    });
+
+
+});
+
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   NOTIFICACIONES 
+ruta.get('/notificaciones', (req, res) => {
+
+    var params = {
+        TableName: "notify_lc",
+        FilterExpression: 'usuarioPropietario = :value',
+        ExpressionAttributeValues: { ':value': req.session.email }
+    };
+
+    documentClient.scan(params, function(err, data) {
+        if (err) console.log(err)
+        else {
+            var avisos = data.Items;
+            var a = avisos.sort(function(a, b) {
+                return new Date(a.fecha) - new Date(b.fecha);
+            });
+
+            if (avisos == undefined) avisos = {};
+
+            var mensaje = "";
+            if (avisos.length == 0) mensaje = "No hay notificaciones pendientes";
+
+            res.render('notificaciones', { avisos: a, mensaje });
 
         }
     });
@@ -155,9 +232,12 @@ ruta.get('/eliminar/:id', (req, res) => {
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ NOTIFICAR DE UN CAMBIO PARA ALGUN AVISO
 
-var aviso = {};
+var avisoCambio = {};
 ruta.get('/notify/:id', (req, res) => {
+
+
     var id = req.params.id;
+    console.log(id);
     var params = {
         TableName: "aviso_lc",
         Key: {
@@ -168,25 +248,42 @@ ruta.get('/notify/:id', (req, res) => {
     documentClient.get(params, function(err, data) {
         if (err) console.log(err);
         else {
-            aviso = data.Item;
-            res.redirect('/crearNotify');
+            console.log(data.Item.email);
+            if (data.Item.email == req.session.email) {
+                res.redirect('/historial');
+            } else {
+                avisoCambio = data.Item;
+                res.redirect('/crearNotify');
+            }
+
         }
     });
 });
 
 ruta.get('/crearNotify', (req, res) => {
-    res.render('crearNotificacion', { aviso });
+    res.render('crearNotificacion', { avisoCambio });
 });
+
+var currentDate = new Date().toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+}).toString();
 
 
 ruta.post('/nuevaNotificacion', (req, res) => {
-    var { id_aviso, correoDePropietario, comentario } = req.body;
+    var { id_aviso, tituloAviso, imgAviso, descripcionAviso, lapsoAviso, correoDePropietario, comentario } = req.body;
 
     var nombre = req.session.nombre;
     var departamento = req.session.departamento;
     var object = {
-        "id_notificación": uuidv4(),
+        "id_notify": uuidv4(),
+        "fecha": currentDate,
         "id_aviso": id_aviso,
+        "tituloAviso": tituloAviso,
+        "descripcionAviso": descripcionAviso,
+        "lapsoAviso": lapsoAviso,
+        "imgAviso": imgAviso,
         "usuarioPropietario": correoDePropietario,
         "usuariONotificador": nombre,
         "departamentoNotificador": departamento,
@@ -204,6 +301,4 @@ ruta.post('/nuevaNotificacion', (req, res) => {
             console.log("Error siguiente: ", err);
         }
     });
-
-
 });

@@ -12,7 +12,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/login_register.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-
     <title>Notificar</title>
 </head>
 
@@ -32,7 +31,7 @@
                         <a class="nav-link" href="/historial">Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Notificaciones</a>
+                        <a class="nav-link" href="/notificaciones">Notificaciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/perfil">Perfil</a>
@@ -50,38 +49,40 @@
         <div class="card mb-3 card-bg" style="max-width: 100% ">
             <div class="row g-0 ">
                 <div class="col-md-3 text-center">
-                    <img src="<%= aviso.img %> " class="imgCardHistorial displayCenter" style="max-width: 200px; max-height: 200px;">
+                    <img src="<%= avisoCambio.img %> " class="imgCardHistorial displayCenter" style="max-width: 200px; max-height: 200px;">
                 </div>
                 <div class="col-md-5">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <%= aviso.titulo  %>
+                            <%= avisoCambio.titulo  %>
                         </h5>
                         <h6 class="card-title">
-                            <%= aviso.fecha  %>
+                            <%= avisoCambio.fecha  %>
                         </h6>
                         <p class="card-text">
-                            <%= aviso.descripcion  %>
+                            <%= avisoCambio.descripcion  %>
                         </p>
-                        <p class="card-text"><small class="text-muted"><%= aviso.lapso %> </small></p>
-                        <p class="card-text"><small class="text-muted"> <%= aviso.usuario  %> - <%= aviso.departamento  %> </small></p>
+                        <p class="card-text"><small class="text-muted"><%= avisoCambio.lapso %> </small></p>
+                        <p class="card-text"><small class="text-muted"> <%= avisoCambio.usuario  %> - <%= avisoCambio.departamento  %> </small></p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <form action="/nuevaNotificacion" method="POST" id="notificacion-capturar">
                         <div class="form-group mb-3">
-                            <textarea class="form-control" placeholder="Escribe aquí tu comentario o petición de cambio para este aviso..." name="comentario" id="comentario" cols="40" rows="10" form="notificacion-capturar"></textarea> <br>
-                            <input type="hidden" value="<%= aviso.titulo_id  %>" id="id_aviso" name="id_aviso">
-                            <input type="hidden" value="<%= aviso.email  %>" id="correoDePropietario" name="correoDePropietario">
+                            <textarea class="form-control" placeholder="Escribe aquí tu comentario o petición de cambio para este avisoCambio..." name="comentario" id="comentario" cols="40" rows="10" form="notificacion-capturar"></textarea> <br>
+                            <input type="hidden" value="<%= avisoCambio.titulo_id  %>" id="id_aviso" name="id_aviso">
+                            <input type="hidden" value="<%= avisoCambio.email  %>" id="correoDePropietario" name="correoDePropietario">
+                            <input type="hidden" value="<%= avisoCambio.titulo  %>" id="tituloAviso" name="tituloAviso">
+                            <input type="hidden" value="<%= avisoCambio.descripcion  %>" id="descripcionAviso" name="descripcionAviso">
+                            <input type="hidden" value="<%= avisoCambio.lapso  %>" id="lapsoAviso" name="lapsoAviso">
+                            <input type="hidden" value="<%= avisoCambio.img  %>" id="imgAviso" name="imgAviso">
                             <input type="submit" class="btn btn-outline-primary" value="Notificar" id="btn-guardar">
                             <a style="text-align: right; text-decoration: none;" href="/historial">Cancelar</a>
                         </div>
                     </form>
                 </div>
             </div>
-
         </div>
-
     </div>
     <script src="assets/js/size_display.js"></script>
 </body>

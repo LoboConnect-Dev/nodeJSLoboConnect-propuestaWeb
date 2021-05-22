@@ -12,10 +12,14 @@
 
 /*Pantallas chicas*/
 
-.col-md-3 img[class="imgCardHistorial"] {
-    margin-top: 5%;
-    border-radius: 1rem;
-    max-width: 250px;
+div[class="col-md-3"] {
+    text-align: center;
+}
+
+div[class="col-md-3"] img {
+    margin-top: 10px;
+    max-width: 200px;
+    max-height: 200px;
 }
 
 .col-md-1 a i {
@@ -26,6 +30,17 @@
 
 /*Pantallas grandes*/
 
+div[class="col-md-3 displayCenter"] {
+    text-align: center;
+    line-height: 300px;
+}
+
+div[class="col-md-3 displayCenter"] img {
+    max-width: 200px;
+    max-height: 200px;
+    vertical-align: middle;
+}
+
 .col-md-3 img[class="imgCardHistorial displayCenter"] {
     border-radius: 1rem;
     position: absolute;
@@ -35,6 +50,14 @@
 }
 
 .col-md-1 a i[class="fas fa-bell displayCenter"] {
+    margin: 10px;
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.col-md-1 a i[class="fas fa-pen-square displayCenter"] {
     margin: 10px;
     font-size: 30px;
     position: absolute;

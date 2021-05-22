@@ -54,24 +54,12 @@
             <div class="bgProfilImg">
                 <img src="assets/img/avatar.svg">
             </div>
-            <div class="contentProfil">
-                <ul>
-                    <li><span>Nombre</span></li>
+            <div class="contentProfil text-center">
+                <h2>La contraseña actual no coincide con la del usuario</h2>
+                <br>
 
-                    <li>
-                        <%= profile.name %>
-                    </li>
-                    <li><span>E-mail</span></li>
-                    <li>
-                        <%= profile.email %>
-                    </li>
-                    <li><span>Departamento</span></li>
-                    <li>
-                        <%= profile.depa %>
-                    </li>
-                </ul>
-                <a class="btn btn-primary" href="/sesion/cambiarPass">Cambiar contraseña</a>
-                <a class="btn btn-danger" href="/sesion/exit">Cerrar sesión</a>
+                <a class="btn btn-primary" href="/sesion/cambiarPass">Volver a intentar</a>
+                <a class="btn btn-danger" href="/perfil">Cancelar </a>
             </div>
         </div>
     </div>
