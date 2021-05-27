@@ -61,26 +61,33 @@ function checkFileType(file, cb) {
 //--------------------------------SUBIR IMAGENES AL SERVIDOR----------------------------
 var urlImg = "";
 ruta.post('/uploads', (req, res) => {
-    upload(req, res, (err) => {
-        if (err) {
-            res.render('imagenex', {
-                msg: err
-            });
-        } else {
-            if (req.file == undefined) {
+
+    if (req.session.email && req.session.password) {
+        upload(req, res, (err) => {
+            if (err) {
                 res.render('imagenex', {
-                    msg: 'Error: No File Selected!'
+                    msg: err
                 });
             } else {
-                res.render('imagenex', {
-                    msg: 'File Uploaded!',
-                    file: `./../assets/img/uploads/${req.file.filename}`
-                });
-                urlImg = `assets/img/uploads/${req.file.filename}`;
-                console.log(urlImg);
+                if (req.file == undefined) {
+                    res.render('imagenex', {
+                        msg: 'Error: No File Selected!'
+                    });
+                } else {
+                    res.render('imagenex', {
+                        msg: 'File Uploaded!',
+                        file: `./../assets/img/uploads/${req.file.filename}`
+                    });
+                    urlImg = `assets/img/uploads/${req.file.filename}`;
+                    console.log(urlImg);
+                }
             }
-        }
-    });
+        });
+
+    } else {
+        res.redirect('/')
+    }
+
 });
 // ------------------------------DAR DE ALTA LOS AVISOS----------------------
 
@@ -91,104 +98,112 @@ var currentDate = new Date().toLocaleDateString('en-US', {
 }).toString();
 
 ruta.post('/altaAviso', (req, res) => {
-    var { id, titulo, descripcion, img, categoria, lapso } = req.body;
-    console.log("Creo que ya jala ", img);
-    console.log(req.body);
-    var email = req.session.email;
-    var nombre = req.session.nombre;
-    var departamento = req.session.departamento;
 
-    if (urlImg != "") {
-        img = urlImg;
-        urlImg = "";
-    }
+    if (req.session.email && req.session.password) {
 
-    if (id.length <= 0) id = uuidv4();
 
-    var params = {
-        TableName: "aviso_lc",
-        Key: {
-            "titulo_id": id,
+        var { id, titulo, descripcion, img, categoria, lapso } = req.body;
+        console.log("Creo que ya jala ", img);
+        console.log(req.body);
+        var email = req.session.email;
+        var nombre = req.session.nombre;
+        var departamento = req.session.departamento;
+
+        if (urlImg != "") {
+            img = urlImg;
+            urlImg = "";
         }
-    };
 
-    documentClient.get(params, function(err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            if (data.Item === undefined) {
-                insertaNuevoAviso();
-            } else {
-                actualizaAviso();
-            }
-        }
-    });
+        if (id.length <= 0) id = uuidv4();
 
-
-    let insertaNuevoAviso = function() {
-        var object = {
-            "titulo_id": uuidv4(),
-            "fecha": currentDate,
-            "titulo": titulo,
-            "descripcion": descripcion,
-            "img": img,
-            "categoria": categoria,
-            "lapso": lapso,
-            "exist": "true",
-            "email": email,
-            "usuario": nombre,
-            "departamento": departamento
-        };
-        urlImg = "";
-        const params = {
-            TableName: "aviso_lc",
-            Item: object
-        };
-        documentClient.put(params, function(err, data) {
-            if (!err) {
-                console.log("Guardado correctamente");
-                res.redirect('/avisosGestion');
-            } else {
-                console.log("Error siguiente: ", err);
-            }
-        });
-    }
-
-    let actualizaAviso = function() {
-
-        const params = {
+        var params = {
             TableName: "aviso_lc",
             Key: {
                 "titulo_id": id,
-            },
-            UpdateExpression: "set #fecha= :fecha, #titulo= :titulo ,#descripcion= :descripcion, #img= :img, #categoria= :categoria, #lapso= :lapso",
-            ExpressionAttributeValues: {
-                ":fecha": currentDate,
-                ":titulo": titulo,
-                ":descripcion": descripcion,
-                ":img": img,
-                ":categoria": categoria,
-                ":lapso": lapso,
-            },
-            ExpressionAttributeNames: {
-                "#fecha": "fecha",
-                "#titulo": "titulo",
-                "#descripcion": "descripcion",
-                "#img": "img",
-                "#categoria": "categoria",
-                "#lapso": "lapso",
-            },
-            ReturnValues: "UPDATED_NEW"
+            }
         };
 
-        documentClient.update(params, function(err, data) {
+        documentClient.get(params, function(err, data) {
             if (err) {
-                console.log("Error siguiente: ", err);
+                console.log(err);
             } else {
-                console.log("Actualizado correctamente ", data);
-                res.redirect('/avisosGestion');
+                if (data.Item === undefined) {
+                    insertaNuevoAviso();
+                } else {
+                    actualizaAviso();
+                }
             }
         });
 
+
+        let insertaNuevoAviso = function() {
+            var object = {
+                "titulo_id": uuidv4(),
+                "fecha": currentDate,
+                "titulo": titulo,
+                "descripcion": descripcion,
+                "img": img,
+                "categoria": categoria,
+                "lapso": lapso,
+                "exist": "true",
+                "email": email,
+                "usuario": nombre,
+                "departamento": departamento
+            };
+            urlImg = "";
+            const params = {
+                TableName: "aviso_lc",
+                Item: object
+            };
+            documentClient.put(params, function(err, data) {
+                if (!err) {
+                    console.log("Guardado correctamente");
+                    res.redirect('/avisosGestion');
+                } else {
+                    console.log("Error siguiente: ", err);
+                }
+            });
+        }
+
+        let actualizaAviso = function() {
+
+            const params = {
+                TableName: "aviso_lc",
+                Key: {
+                    "titulo_id": id,
+                },
+                UpdateExpression: "set #fecha= :fecha, #titulo= :titulo ,#descripcion= :descripcion, #img= :img, #categoria= :categoria, #lapso= :lapso",
+                ExpressionAttributeValues: {
+                    ":fecha": currentDate,
+                    ":titulo": titulo,
+                    ":descripcion": descripcion,
+                    ":img": img,
+                    ":categoria": categoria,
+                    ":lapso": lapso,
+                },
+                ExpressionAttributeNames: {
+                    "#fecha": "fecha",
+                    "#titulo": "titulo",
+                    "#descripcion": "descripcion",
+                    "#img": "img",
+                    "#categoria": "categoria",
+                    "#lapso": "lapso",
+                },
+                ReturnValues: "UPDATED_NEW"
+            };
+
+            documentClient.update(params, function(err, data) {
+                if (err) {
+                    console.log("Error siguiente: ", err);
+                } else {
+                    console.log("Actualizado correctamente ", data);
+                    res.redirect('/avisosGestion');
+                }
+            });
+
+        }
+
+    } else {
+        res.redirect('/')
     }
 });

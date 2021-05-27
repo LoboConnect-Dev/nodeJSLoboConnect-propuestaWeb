@@ -31,7 +31,7 @@
                         <a class="nav-link" href="/historial">Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/notificaciones">Notificaciones</a>
+                        <a class="nav-link" href="/notificaciones">Notificaciones <span style="color: rgb(255, 0, 0);"><%= numNotify %></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/perfil">Perfil</a>
@@ -80,9 +80,29 @@
                         </div>
                     </div>
                     <div class="col-md-1">
-
-                        <a href="/comentarioRevisado/<%= aviso.id_notify%>" class="text-center mx-auto"> <i class="fas fa-pen-square displayCenter"></i> </a>
+                        <a title="Firmar comentario" style="cursor: pointer;" onclick="firmarComentario('<%= aviso.id_notify%>')" class="text-center mx-auto"> <i class="fas fa-pen-square displayCenter"></i> </a>
                     </div>
+                    <script>
+                        function firmarComentario(a) {
+                            Swal.fire({
+                                title: 'Firmar comentario',
+                                text: "Al firmar este comentario se eliminará, asegurate de haber tomado nota",
+                                icon: 'Precaución',
+                                showCancelButton: true,
+                                confirmButtonColor: '#198754',
+                                cancelButtonColor: '#a9a9a9',
+                                confirmButtonText: 'Firmar',
+                                cancelButtonText: 'Cancelar'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    var url = "/comentarioRevisado/" + a;
+                                    console.log(url);
+                                    location.href = url;
+                                }
+                            })
+                        }
+                    </script>
+
                 </div>
             </div>
             <% }); %>

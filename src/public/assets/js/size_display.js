@@ -4,9 +4,12 @@ jQuery(document).ready(function($) {
         if (ww < 600) {
             $('.fas.fa-bell').removeClass('displayCenter'); //Si el tamaño de la pantalla es pequeño, se removerá esta clase
             $('.col-md-3').removeClass('displayCenter');
+            $('.fas.fa-pen-square').removeClass('displayCenter');
+
         } else if (ww >= 601) {
             $('.fas.fa-bell').addClass('displayCenter'); //Si el tamaño de la pantalla es grande, se agregará esta clase
             $('.col-md-3').addClass('displayCenter');
+            $('.fas.fa-pen-square').addClass('displayCenter');
         };
     };
     $(window).resize(function() {

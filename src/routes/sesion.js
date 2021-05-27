@@ -92,7 +92,7 @@ ruta.post('/verificarLogueo', (req, res) => {
                             req.session.nombre = data.Item.usuario;
                             req.session.departamento = data.Item.departamento;
                             req.session.password = data.Item.pass;
-                            res.redirect('/avisosGestion');
+                            res.redirect('/actualizarNumAvisos');
                         }
                     });
                 } else {
@@ -112,7 +112,12 @@ ruta.post('/verificarLogueo', (req, res) => {
 
 
 ruta.get('/cambiarPass', (req, res) => {
-    res.render('changePassword');
+    if (req.session.email && req.session.password) {
+        res.render('changePassword');
+    } else {
+        res.redirect('/')
+    }
+
 });
 
 ruta.post('/changePass', (req, res) => {

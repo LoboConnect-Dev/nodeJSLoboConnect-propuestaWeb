@@ -40,7 +40,7 @@
                         <a class="nav-link" href="/historial">Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/notificaciones">Notificaciones</a>
+                        <a class="nav-link" href="/notificaciones">Notificaciones  <span style="color: rgb(255, 0, 0);"><%= numNotify %></span> </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/perfil">Perfil</a>
@@ -168,11 +168,42 @@
                                             <a href="/obtenerID/<%= aviso.titulo_id %>">
                                                 <h5>📝</h5>
                                             </a>
-                                            <a href="/eliminar/<%= aviso.titulo_id%> ">
+                                            <!-- <input id="IdDelete" style="display: none;" value="">
+
+                                            </input> -->
+                                            <a style="cursor: pointer;" onclick="confirmarDelete('<%= aviso.titulo_id %>')">
                                                 <h5>❌</h5>
                                             </a>
                                         </td>
                                     </tbody>
+
+                                    <!-- ALERTA POR SI EL USUARIO QUIERE ELIMINAR ALGÚN AVISO -->
+                                    <script>
+                                        function confirmarDelete(a) {
+                                            Swal.fire({
+                                                title: '¿Estás seguro?',
+                                                text: "¡Esta acción elimina también los comentarios relacionados a este aviso, no se podrá revertir!",
+                                                icon: 'Precaución',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#d33',
+                                                cancelButtonColor: '#a9a9a9',
+                                                confirmButtonText: 'Si, eliminar',
+                                                cancelButtonText: 'Cancelar'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    Swal.fire(
+                                                        '¡Eliminado!',
+                                                        'Tu archivo ha sido eliminado.',
+                                                        'success'
+                                                    )
+                                                    var url = "/eliminar/" + a;
+                                                    console.log(url);
+                                                    location.href = url;
+                                                }
+                                            })
+                                        }
+                                    </script>
+                                    <!-- ALERTA POR SI EL USUARIO QUIERE ELIMINAR ALGÚN AVISO -->
                                     <% }); %>
                             </table>
                         </div>
@@ -181,7 +212,7 @@
             </div>
         </div>
     </main>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="assets/js/main.js"></script>
     <script type="text/javascript" src="assets/js/size_display.js"></script>
 

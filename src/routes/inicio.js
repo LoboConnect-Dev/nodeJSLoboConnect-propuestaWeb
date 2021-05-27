@@ -20,6 +20,33 @@ AWS.config.update(awsConfig);
 const documentClient = new AWS.DynamoDB.DocumentClient();
 /*------------------------AWS -----------------------*/
 
+/*------------------------ ACTUALIZAR NUMERO DE NOTIFICACIONES -----------------------*/
+var numeroTotal = 0;
+var usuarioActual;
+let refreshNumNotificaciones = function() {
+
+    var params = {
+        TableName: "notify_lc",
+        FilterExpression: 'usuarioPropietario = :value',
+        ExpressionAttributeValues: { ':value': usuarioActual }
+    };
+
+    documentClient.scan(params, function(err, data) {
+        if (err) console.log(err)
+        else {
+            numeroTotal = data.Items.length;;
+        }
+    });
+}
+
+ruta.get('/actualizarNumAvisos', (req, res) => {
+    usuarioActual = req.session.email;
+    refreshNumNotificaciones();
+    res.redirect('/avisosGestion')
+});
+
+
+/*------------------------ ACTUALIZAR NUMERO DE NOTIFICACIONES -----------------------*/
 /*-------------------------------------------------------------------- RUTAS LOGIN */
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   lOGIN
@@ -48,32 +75,44 @@ ruta.get('/noExiste', (req, res) => {
 /*-------------------------------------------------------------------- INTERFACES APLICACIÓN*/
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   PERFIL
 ruta.get('/perfil', (req, res) => {
+    if (req.session.email && req.session.password) {
+        var profile = {
+            "name": req.session.nombre,
+            "email": req.session.email,
+            "depa": req.session.departamento,
+        }
 
-    var profile = {
-        "name": req.session.nombre,
-        "email": req.session.email,
-        "depa": req.session.departamento,
+        res.render('profilPage', { profile, numNotify: numeroTotal });
+    } else {
+        res.redirect('/')
     }
-
-    res.render('profilPage', { profile });
 });
+
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   GESTOR DE AVISOS
 
 ruta.get('/avisosGestion', (req, res) => {
-    var params = {
-        TableName: "aviso_lc",
-        FilterExpression: 'email = :value',
-        ExpressionAttributeValues: { ':value': req.session.email }
-    };
-    documentClient.scan(params, function(err, data) {
-        if (err) console.log(err)
-        else {
-            var avisos = data.Items;
-            res.render('avisosGestion', { aviso, avisos });
-            aviso = {};
-        }
-    });
+
+
+    if (req.session.email && req.session.password) {
+        var params = {
+            TableName: "aviso_lc",
+            FilterExpression: 'email = :value',
+            ExpressionAttributeValues: { ':value': req.session.email }
+        };
+        documentClient.scan(params, function(err, data) {
+            if (err) console.log(err)
+            else {
+                var avisos = data.Items;
+
+
+                res.render('avisosGestion', { aviso, avisos, numNotify: numeroTotal });
+                aviso = {};
+            }
+        });
+    } else {
+        res.redirect('/')
+    }
 });
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   CAPRUTAR AVISO - FORMULARIO
@@ -87,26 +126,12 @@ var aviso = {
 
 ruta.get('/comentarioRevisado/:id', (req, res) => {
 
-    var id = req.params.id;
 
-    var params = {
-        TableName: "notify_lc",
-        Key: {
-            "id_notify": id,
-        }
-    };
+    if (req.session.email && req.session.password) {
 
-    documentClient.get(params, function(err, data) {
-        if (err) {
-            console.log("Este es el error", err);
-        } else {
-            var idAviso = data.Item.id_aviso;
-            eliminarComentario();
-            res.redirect(`/obtenerID/${idAviso}`)
-        }
-    });
 
-    let eliminarComentario = function() {
+        var id = req.params.id;
+
         var params = {
             TableName: "notify_lc",
             Key: {
@@ -114,59 +139,100 @@ ruta.get('/comentarioRevisado/:id', (req, res) => {
             }
         };
 
-        documentClient.delete(params, function(err, data) {
+        documentClient.get(params, function(err, data) {
             if (err) {
                 console.log("Este es el error", err);
             } else {
-                console.log("Eliminado correctamente");
+                var idAviso = data.Item.id_aviso;
+
+                eliminarComentario();
+                res.redirect(`/obtenerID/${idAviso}`)
             }
         });
+
+        let eliminarComentario = function() {
+            var params = {
+                TableName: "notify_lc",
+                Key: {
+                    "id_notify": id,
+                }
+            };
+
+            documentClient.delete(params, function(err, data) {
+                if (err) {
+                    console.log("Este es el error", err);
+                } else {
+                    refreshNumNotificaciones();
+                    console.log("Eliminado correctamente");
+                }
+            });
+        }
+    } else {
+        res.redirect('/')
     }
 
 });
-ruta.get('/obtenerID/:id', (req, res) => {
-    var id = req.params.id;
-    var params = {
-        TableName: "aviso_lc",
-        Key: {
-            "titulo_id": id,
-        }
-    };
 
-    documentClient.get(params, function(err, data) {
-        if (err) console.log(err);
-        else {
-            aviso = data.Item;
-            res.redirect('/avisosGestion');
-        }
-    });
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   EDITAR AVISO 
+ruta.get('/obtenerID/:id', (req, res) => {
+
+
+    if (req.session.email && req.session.password) {
+
+
+        var id = req.params.id;
+        var params = {
+            TableName: "aviso_lc",
+            Key: {
+                "titulo_id": id,
+            }
+        };
+
+        documentClient.get(params, function(err, data) {
+            if (err) console.log(err);
+            else {
+                aviso = data.Item;
+                res.redirect('/avisosGestion');
+            }
+        });
+
+    } else {
+        res.redirect('/')
+    }
 });
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   HISTORIAL 
 ruta.get('/historial', (req, res) => {
 
-    var params = {
-        TableName: "aviso_lc",
-        FilterExpression: 'exist = :value',
-        ExpressionAttributeValues: { ':value': "true" }
-    };
+    if (req.session.email && req.session.password) {
 
-    documentClient.scan(params, function(err, data) {
-        if (err) console.log(err)
-        else {
-            var avisos = data.Items;
-            var a = avisos.sort(function(a, b) {
-                return new Date(a.fecha) - new Date(b.fecha);
-            });
-            if (avisos == undefined) avisos = {};
 
-            var mensaje = "";
-            if (avisos.length == 0) mensaje = "No hay notificaciones pendientes";
+        var params = {
+            TableName: "aviso_lc",
+            FilterExpression: 'exist = :value',
+            ExpressionAttributeValues: { ':value': "true" }
+        };
 
-            res.render('historial', { avisos: a, mensaje });
+        documentClient.scan(params, function(err, data) {
+            if (err) console.log(err)
+            else {
+                var avisos = data.Items;
+                var a = avisos.sort(function(a, b) {
+                    return new Date(b.fecha) - new Date(a.fecha);
+                });
+                if (avisos == undefined) avisos = {};
 
-        }
-    });
+                var mensaje = "";
+                if (avisos.length == 0) mensaje = "No hay avisos todavía";
+
+                res.render('historial', { avisos: a, mensaje, numNotify: numeroTotal });
+
+            }
+        });
+    } else {
+        res.redirect('/')
+    }
 
 
 });
@@ -174,59 +240,124 @@ ruta.get('/historial', (req, res) => {
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   NOTIFICACIONES 
 ruta.get('/notificaciones', (req, res) => {
+    if (req.session.email && req.session.password) {
 
-    var params = {
-        TableName: "notify_lc",
-        FilterExpression: 'usuarioPropietario = :value',
-        ExpressionAttributeValues: { ':value': req.session.email }
-    };
+        var params = {
+            TableName: "notify_lc",
+            FilterExpression: 'usuarioPropietario = :value',
+            ExpressionAttributeValues: { ':value': req.session.email }
+        };
 
-    documentClient.scan(params, function(err, data) {
-        if (err) console.log(err)
-        else {
-            var avisos = data.Items;
-            var a = avisos.sort(function(a, b) {
-                return new Date(a.fecha) - new Date(b.fecha);
-            });
+        documentClient.scan(params, function(err, data) {
+            if (err) console.log(err)
+            else {
+                var avisos = data.Items;
+                var a = avisos.sort(function(a, b) {
+                    return new Date(b.fecha) - new Date(a.fecha);
+                });
 
-            if (avisos == undefined) avisos = {};
+                if (avisos == undefined) avisos = {};
 
-            var mensaje = "";
-            if (avisos.length == 0) mensaje = "No hay notificaciones pendientes";
+                var mensaje = "";
+                if (avisos.length == 0) mensaje = "No hay notificaciones pendientes";
 
-            res.render('notificaciones', { avisos: a, mensaje });
+                res.render('notificaciones', { avisos: a, mensaje, numNotify: numeroTotal });
 
-        }
-    });
+            }
+        });
+    } else {
+        res.redirect('/')
+    }
 
 
 });
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SUBIR IMAGEN AL SERVIDOR
 
 ruta.get('/imagen', (req, res) => {
-    res.render('imagenex');
+    if (req.session.email && req.session.password) {
+
+
+        res.render('imagenex');
+    } else {
+        res.redirect('/')
+    }
+
 });
 
 /*---------------------------------------------------------- ELIMINAR PRODUCTOS -------------------------- */
 ruta.get('/eliminar/:id', (req, res) => {
 
-    var id = req.params.id;
-    console.log(id);
+    if (req.session.email && req.session.password) {
 
-    const params = {
-        TableName: "aviso_lc",
-        Key: {
-            "titulo_id": id,
+
+        var id = req.params.id;
+
+        console.log("as asd", id);
+
+        const params = {
+            TableName: "aviso_lc",
+            Key: {
+                "titulo_id": id,
+            }
+        };
+
+        documentClient.delete(params, function(err, data) {
+            if (err) {
+                console.log("Ocurrió un error", err);
+            } else {
+
+                console.log("Eliminado correctamente ", data);
+            }
+        });
+
+        let buscarSiHayComentarios = function(ID) {
+
+            var params = {
+                TableName: "notify_lc",
+                FilterExpression: 'id_aviso = :value',
+                ExpressionAttributeValues: { ':value': ID }
+            };
+
+            documentClient.scan(params, function(err, data) {
+                if (err) {
+                    console.log("Ocurrió un error", err);
+                } else {
+                    console.log("Tiene comentarios? ");
+                    if (data.Items != undefined && data.Items.length > 0) {
+                        refreshNumNotificaciones();
+                        console.log("Si hay comentarios por eliminar");
+                        eliminarNotificaciónIfExist(data.Items);
+                    } else {
+                        console.log("No hay comentarios por eliminar");
+                    }
+                    res.redirect('/avisosGestion');
+                }
+            });
         }
-    };
-    documentClient.delete(params, function(err, data) {
-        if (err) {
-            console.log("Ocurrió un error", err);
-        } else {
-            console.log("Eliminado correctamente ", data);
-            res.redirect('/avisosGestion');
+        buscarSiHayComentarios(id);
+        let eliminarNotificaciónIfExist = function(ArrayComentarios) {
+            ArrayComentarios.forEach(comentario => {
+                var id = comentario.id_notify;
+
+                var params = {
+                    TableName: "notify_lc",
+                    Key: {
+                        "id_notify": id,
+                    }
+                };
+
+                documentClient.delete(params, function(err, data) {
+                    if (err) {
+                        console.log("Este es el error", err);
+                    } else {
+                        console.log("Eliminado correctamente");
+                    }
+                });
+            });
         }
-    });
+    } else {
+        res.redirect('/')
+    }
 });
 
 
@@ -234,34 +365,45 @@ ruta.get('/eliminar/:id', (req, res) => {
 
 var avisoCambio = {};
 ruta.get('/notify/:id', (req, res) => {
+    if (req.session.email && req.session.password) {
 
-
-    var id = req.params.id;
-    console.log(id);
-    var params = {
-        TableName: "aviso_lc",
-        Key: {
-            "titulo_id": id,
-        }
-    };
-
-    documentClient.get(params, function(err, data) {
-        if (err) console.log(err);
-        else {
-            console.log(data.Item.email);
-            if (data.Item.email == req.session.email) {
-                res.redirect('/historial');
-            } else {
-                avisoCambio = data.Item;
-                res.redirect('/crearNotify');
+        var id = req.params.id;
+        console.log(id);
+        var params = {
+            TableName: "aviso_lc",
+            Key: {
+                "titulo_id": id,
             }
+        };
 
-        }
-    });
+        documentClient.get(params, function(err, data) {
+            if (err) console.log(err);
+            else {
+                console.log(data.Item.email);
+                if (data.Item.email == req.session.email) {
+                    res.redirect('/historial');
+                } else {
+                    avisoCambio = data.Item;
+
+                    res.redirect('/crearNotify');
+                }
+
+            }
+        });
+
+    } else {
+        res.redirect('/')
+    }
 });
 
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CRERA LA NOTIFICACION
 ruta.get('/crearNotify', (req, res) => {
-    res.render('crearNotificacion', { avisoCambio });
+    if (req.session.email && req.session.password) {
+
+        res.render('crearNotificacion', { avisoCambio, numNotify: numeroTotal });
+    } else {
+        res.redirect('/')
+    }
 });
 
 var currentDate = new Date().toLocaleDateString('en-US', {
@@ -272,33 +414,39 @@ var currentDate = new Date().toLocaleDateString('en-US', {
 
 
 ruta.post('/nuevaNotificacion', (req, res) => {
-    var { id_aviso, tituloAviso, imgAviso, descripcionAviso, lapsoAviso, correoDePropietario, comentario } = req.body;
+    if (req.session.email && req.session.password) {
 
-    var nombre = req.session.nombre;
-    var departamento = req.session.departamento;
-    var object = {
-        "id_notify": uuidv4(),
-        "fecha": currentDate,
-        "id_aviso": id_aviso,
-        "tituloAviso": tituloAviso,
-        "descripcionAviso": descripcionAviso,
-        "lapsoAviso": lapsoAviso,
-        "imgAviso": imgAviso,
-        "usuarioPropietario": correoDePropietario,
-        "usuariONotificador": nombre,
-        "departamentoNotificador": departamento,
-        "comentario": comentario,
-    };
-    const params = {
-        TableName: "notify_lc",
-        Item: object
-    };
-    documentClient.put(params, function(err, data) {
-        if (!err) {
-            console.log("Guardado correctamente");
-            res.redirect('/historial');
-        } else {
-            console.log("Error siguiente: ", err);
-        }
-    });
+        var { id_aviso, tituloAviso, imgAviso, descripcionAviso, lapsoAviso, correoDePropietario, comentario } = req.body;
+
+        var nombre = req.session.nombre;
+        var departamento = req.session.departamento;
+        var object = {
+            "id_notify": uuidv4(),
+            "fecha": currentDate,
+            "id_aviso": id_aviso,
+            "tituloAviso": tituloAviso,
+            "descripcionAviso": descripcionAviso,
+            "lapsoAviso": lapsoAviso,
+            "imgAviso": imgAviso,
+            "usuarioPropietario": correoDePropietario,
+            "usuarioNotificador": nombre,
+            "departamentoNotificador": departamento,
+            "comentario": comentario,
+            "status": "true"
+        };
+        const params = {
+            TableName: "notify_lc",
+            Item: object
+        };
+        documentClient.put(params, function(err, data) {
+            if (!err) {
+                console.log("Guardado correctamente");
+                res.redirect('/historial');
+            } else {
+                console.log("Error siguiente: ", err);
+            }
+        });
+    } else {
+        res.redirect('/')
+    }
 });
