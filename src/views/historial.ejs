@@ -53,25 +53,17 @@
         <% avisos.forEach(aviso => { %>
             <div class="card mb-3 card-bg" style="max-width: 100% ">
                 <div class="row g-0 ">
-                    <div class="col-md-3">
-                        <img src="<%= aviso.img %> " class="displayCenter img-fluid rounded">
-                    </div>
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <%= aviso.titulo  %>
                             </h5>
-                            <p class="card-text"><small class="text-muted">Fecha de publicación: <%= aviso.fecha  %> </small></p>
-
                             <p class="card-text">
                                 <%= aviso.descripcion  %>
                             </p>
-                            <p class="card-text"><small class="text-muted"><%= aviso.lapso %> </small></p>
+                            <p class="card-text"><small class="text-muted">Fecha de publicación: <%= aviso.fecha  %> </small></p>
                             <p class="card-text"><small class="text-muted"> <%= aviso.usuario  %> - <%= aviso.departamento  %> </small></p>
                         </div>
-                    </div>
-                    <div class="col-md-1">
-                        <a title="Notificar algún cambio" href="/notify/<%= aviso.titulo_id%>" class="text-center mx-auto"> <i class="fas fa-bell displayCenter"></i> </a>
                     </div>
                 </div>
             </div>

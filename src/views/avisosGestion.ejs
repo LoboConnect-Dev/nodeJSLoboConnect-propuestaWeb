@@ -57,15 +57,15 @@
     <main>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4 col-md-12 mb-1">
-                    <div class="card mt-3 shadow" style="margin-left: 3rem;">
+                <div class="col-lg-4 col-md-4 mb-1">
+                    <div class="card mt-3 shadow">
                         <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
-                            Capturar
+                            Capturar Aviso
                         </div>
                         <div class="card-body">
                             <div class="card-capturar">
                                 <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
-                                <form action="/consultas/altaAviso" method="POST" id="aviso-capturar" enctype="ajax multipart/form-data">
+                                <form style="width: 100%;" action="/consultas/altaAviso" method="POST" id="aviso-capturar" enctype="ajax multipart/form-data">
                                     <div class="form-group">
                                         <label for="titulo" style="font-size: 15px;">Titulo</label>
                                         <input type="hidden" class="form-control" id="id" name="id" value="<%= aviso.titulo_id %>">
@@ -73,85 +73,37 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="Descripción" style="font-size: 15px;">Descripción</label>
-                                        <button id="btn-Descripcion" type="button" class="btn btn-outline-success" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Abrir Descripción
-                                    </button>
-                                        <hr>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Descripción</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="10" form="aviso-capturar"><%= aviso.descripcion %> </textarea>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-5">
-                                        <label for="img" style="font-size: 15px;">Imagen</label>
-
-                                        <input style="width: 85%; float:left" type="text" class="form-control" value="<%= aviso.img %>" id="img" name="img">
-                                        <div style="width: 10%; float:right">
-                                            <a style="font-size: 30px;" href="javascript:window.open('/imagen','popup','width=600px,height=600px');">
-                                                <i class="fas fa-camera 7x"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Inicio-Fin" style="font-size: 15px;">Inicio - Fin</label>
-                                        <input type="text" class="form-control" id="lapso" name="lapso" required>
-                                        <script>
-                                            $('#lapso').daterangepicker();
-                                        </script>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Inicio-Fin" style="font-size: 15px;">Categoría</label>
-                                        <select class="form-control form-select" name="categoria" id="categoria" value="<%= aviso.categoria %>">
-                                            <option value="Importante">Importante</option>
-                                            <option value="De Interes">De interés</option>
-                                            <option value="Temporal">Temporal</option>
-                                        </select>
+                                        <textarea style="resize: none;" class="form-control" name="descripcion" id="descripcion" cols="30" rows="12" form="aviso-capturar"><%= aviso.descripcion %> </textarea>
                                     </div>
                                     <div class="d-grid gap-2">
                                         <input type="submit" class="btn btn-outline-primary btn-lg" value="Publicar" id="btn-guardar">
                                     </div>
-
                                 </form>
                                 <!-- FORMULARIO CAPTURAR ------------------------------------------------------------>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-9">
+
+                <!-- PANEL DE AVISOS ------------------------------------------------------------>
+                <div class="col-lg-8 col-md-8">
                     <div class="card mt-3 shadow">
                         <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
-                            Publicados
+                            Avisos Publicados
                         </div>
                         <div class="card-body">
                             <table class="table table-hover" style="position:relative; max-width: 100%;">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Imagen</th>
                                         <th scope="col">Titulo</th>
                                         <th scope="col" class="ocultar"> Descripción</th>
-                                        <th scope="col" class="ocultar"> Categoria</th>
-                                        <th scope="col" class="ocultar"> Lapso</th>
+                                        <th scope="col" class="ocultar"> Fecha de publicación</th>
                                         <th colspan="2" scope="col">Editar/Borrar</th>
                                     </tr>
                                 </thead>
                                 <% avisos.forEach(aviso => { %>
                                     <tbody id="productos">
-                                        <td> <img src="<%= aviso.img %>" style="max-width: 150px; max-height: 150px;"> </td>
+
                                         <td>
                                             <%= aviso.titulo %>
                                         </td>
@@ -159,19 +111,13 @@
                                             <%= aviso.descripcion %>
                                         </td>
                                         <td class="ocultar">
-                                            <%= aviso.categoria %>
-                                        </td>
-                                        <td class="ocultar">
-                                            <%= aviso.lapso %>
+                                            <%= aviso.fecha %>
                                         </td>
                                         <td>
-                                            <a href="/obtenerID/<%= aviso.titulo_id %>">
+                                            <a class="btn btn-outline-warning" href="/obtenerID/<%= aviso.titulo_id %>">
                                                 <h5>📝</h5>
                                             </a>
-                                            <!-- <input id="IdDelete" style="display: none;" value="">
-
-                                            </input> -->
-                                            <a style="cursor: pointer;" onclick="confirmarDelete('<%= aviso.titulo_id %>')">
+                                            <a class="btn btn-outline-danger" style="cursor: pointer;" onclick="confirmarDelete('<%= aviso.titulo_id %>')">
                                                 <h5>❌</h5>
                                             </a>
                                         </td>
@@ -209,15 +155,14 @@
                         </div>
                     </div>
                 </div>
+                <!-- PANEL DE AVISOS ------------------------------------------------------------>
             </div>
         </div>
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="assets/js/main.js"></script>
     <script type="text/javascript" src="assets/js/size_display.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> -->
 </body>
 
 </html>

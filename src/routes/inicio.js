@@ -2,7 +2,6 @@
 const express = require('express');
 const ruta = express.Router(); //Para las rutas
 module.exports = ruta; //Para exportar esta función o constante
-
 /*------------------------ express -----------------------*/
 
 /*------------------------ Extras -----------------------*/
@@ -45,7 +44,6 @@ ruta.get('/actualizarNumAvisos', (req, res) => {
     res.redirect('/avisosGestion')
 });
 
-
 /*------------------------ ACTUALIZAR NUMERO DE NOTIFICACIONES -----------------------*/
 /*-------------------------------------------------------------------- RUTAS LOGIN */
 
@@ -75,6 +73,7 @@ ruta.get('/noExiste', (req, res) => {
 /*-------------------------------------------------------------------- INTERFACES APLICACIÓN*/
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   PERFIL
 ruta.get('/perfil', (req, res) => {
+    refreshNumNotificaciones();
     if (req.session.email && req.session.password) {
         var profile = {
             "name": req.session.nombre,
@@ -93,7 +92,7 @@ ruta.get('/perfil', (req, res) => {
 
 ruta.get('/avisosGestion', (req, res) => {
 
-
+    refreshNumNotificaciones();
     if (req.session.email && req.session.password) {
         var params = {
             TableName: "aviso_lc",
@@ -126,12 +125,8 @@ var aviso = {
 
 ruta.get('/comentarioRevisado/:id', (req, res) => {
 
-
     if (req.session.email && req.session.password) {
-
-
         var id = req.params.id;
-
         var params = {
             TableName: "notify_lc",
             Key: {
@@ -157,7 +152,6 @@ ruta.get('/comentarioRevisado/:id', (req, res) => {
                     "id_notify": id,
                 }
             };
-
             documentClient.delete(params, function(err, data) {
                 if (err) {
                     console.log("Este es el error", err);
@@ -167,6 +161,7 @@ ruta.get('/comentarioRevisado/:id', (req, res) => {
                 }
             });
         }
+
     } else {
         res.redirect('/')
     }
@@ -177,10 +172,7 @@ ruta.get('/comentarioRevisado/:id', (req, res) => {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   EDITAR AVISO 
 ruta.get('/obtenerID/:id', (req, res) => {
 
-
     if (req.session.email && req.session.password) {
-
-
         var id = req.params.id;
         var params = {
             TableName: "aviso_lc",
@@ -204,10 +196,8 @@ ruta.get('/obtenerID/:id', (req, res) => {
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   HISTORIAL 
 ruta.get('/historial', (req, res) => {
-
+    refreshNumNotificaciones();
     if (req.session.email && req.session.password) {
-
-
         var params = {
             TableName: "aviso_lc",
             FilterExpression: 'exist = :value',
@@ -227,7 +217,6 @@ ruta.get('/historial', (req, res) => {
                 if (avisos.length == 0) mensaje = "No hay avisos todavía";
 
                 res.render('historial', { avisos: a, mensaje, numNotify: numeroTotal });
-
             }
         });
     } else {
@@ -240,6 +229,8 @@ ruta.get('/historial', (req, res) => {
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   NOTIFICACIONES 
 ruta.get('/notificaciones', (req, res) => {
+
+    refreshNumNotificaciones();
     if (req.session.email && req.session.password) {
 
         var params = {
