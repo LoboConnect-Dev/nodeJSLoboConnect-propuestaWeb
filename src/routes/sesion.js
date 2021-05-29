@@ -17,26 +17,6 @@ AWS.config.update(awsConfig);
 const documentClient = new AWS.DynamoDB.DocumentClient();
 /*------------------------AWS -----------------------*/
 
-/*------------------------ Mensajes -----------------------*/
-
-var numeroTotal = 0;
-var usuarioActual;
-let refreshNumNotificaciones = function() {
-
-    var params = {
-        TableName: "notify_lc",
-        FilterExpression: 'usuarioPropietario = :value',
-        ExpressionAttributeValues: { ':value': usuarioActual }
-    };
-
-    documentClient.scan(params, function(err, data) {
-        if (err) console.log(err)
-        else {
-            numeroTotal = data.Items.length;;
-        }
-    });
-}
-
 
 /*-------------------------------------------------------------------- RUTAS */
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  EXIT
@@ -111,7 +91,7 @@ ruta.post('/verificarLogueo', (req, res) => {
                             req.session.nombre = data.Item.usuario;
                             req.session.departamento = data.Item.departamento;
                             req.session.password = data.Item.pass;
-                            res.redirect('/actualizarNumAvisos');
+                            res.redirect('/avisosGestion');
                         }
                     });
                 } else {
@@ -131,18 +111,13 @@ ruta.post('/verificarLogueo', (req, res) => {
 
 
 ruta.get('/cambiarPass', (req, res) => {
-    usuarioActual = req.session.email;
-    refreshNumNotificaciones();
-    var num = numeroTotal;
     if (req.session.email && req.session.password) {
-        res.render('changePassword', { numNotify: num });
+        res.render('changePassword');
     } else {
         res.redirect('/')
     }
 
 });
-
-
 
 ruta.post('/changePass', (req, res) => {
     var { actualPassword, newpassword } = req.body;
@@ -331,3 +306,25 @@ ruta.post('/cambiarPass', (req, res) => {
         });
     }
 });
+
+
+
+// /*------------------------ Mensajes -----------------------*/
+
+// var numeroTotal = 0;
+// var usuarioActual;
+// let refreshNumNotificaciones = function() {
+
+//     var params = {
+//         TableName: "notify_lc",
+//         FilterExpression: 'usuarioPropietario = :value',
+//         ExpressionAttributeValues: { ':value': usuarioActual }
+//     };
+
+//     documentClient.scan(params, function(err, data) {
+//         if (err) console.log(err)
+//         else {
+//             numeroTotal = data.Items.length;;
+//         }
+//     });
+// }

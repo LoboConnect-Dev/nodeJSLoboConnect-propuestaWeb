@@ -7,48 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> -->
-
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" type="text/css" href="assets/css/login_register.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
 
     <title>Gestión de avisos</title>
 </head>
 
 <body>
-    <!-- <div style="background-color:rgb(20, 43, 76);"> -->
     <nav class="navbar navbar-expand-lg bg-blueObsc">
-        <div class="container-fluid">
-            <a class="navbar-brand" style="color: white;" href="#">LOBO CONNECT</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuDesplegable" aria-controls="menuDesplegable" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-          </button>
-            <div class="collapse navbar-collapse" id="menuDesplegable">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/avisosGestion">Avisos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/historial">Historial</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/notificaciones">Notificaciones  <span style="color: rgb(255, 0, 0);"><%= numNotify %></span> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/perfil">Perfil</a>
-                    </li>
-                </ul>
-                <a id="exit" class="btn ms-auto" href="/sesion/exit">Salir <i class="fas fa-sign-out-alt"></i></a>
-            </div>
-        </div>
+        <%- include('./partials/navbarGlobal'); %>
     </nav>
     <header class="text-center pb-1" style="background-color:rgb(20, 43, 76);color: white;">
         <h3 class="title">Gestión de avisos</h3>
@@ -60,7 +32,7 @@
                 <div class="col-lg-4 col-md-4 mb-1">
                     <div class="card mt-3 shadow">
                         <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
-                            Capturar Aviso
+                            Capturar aviso
                         </div>
                         <div class="card-body">
                             <div class="card-capturar">
@@ -89,68 +61,74 @@
                 <div class="col-lg-8 col-md-8">
                     <div class="card mt-3 shadow">
                         <div class="card-header text-white h3 text-center" style="background-color: rgba(64, 171, 53);">
-                            Avisos Publicados
+                            Avisos publicados
                         </div>
                         <div class="card-body">
-                            <table class="table table-hover" style="position:relative; max-width: 100%;">
-                                <thead class="thead-dark">
+                            <table class="table table-hover" style="max-width: 100%;">
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Titulo</th>
                                         <th scope="col" class="ocultar"> Descripción</th>
                                         <th scope="col" class="ocultar"> Fecha de publicación</th>
-                                        <th colspan="2" scope="col">Editar/Borrar</th>
+                                        <th scope="col" class="ocultar"> Fecha de modificación</th>
+                                        <th scope="col" class="text-center">Editar/Eliminar</th>
                                     </tr>
                                 </thead>
-                                <% avisos.forEach(aviso => { %>
-                                    <tbody id="productos">
 
-                                        <td>
-                                            <%= aviso.titulo %>
-                                        </td>
-                                        <td class="ocultar">
-                                            <%= aviso.descripcion %>
-                                        </td>
-                                        <td class="ocultar">
-                                            <%= aviso.fecha %>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-outline-warning" href="/obtenerID/<%= aviso.titulo_id %>">
-                                                <h5>📝</h5>
-                                            </a>
-                                            <a class="btn btn-outline-danger" style="cursor: pointer;" onclick="confirmarDelete('<%= aviso.titulo_id %>')">
-                                                <h5>❌</h5>
-                                            </a>
-                                        </td>
-                                    </tbody>
+                                <tbody id="productos">
 
-                                    <!-- ALERTA POR SI EL USUARIO QUIERE ELIMINAR ALGÚN AVISO -->
-                                    <script>
-                                        function confirmarDelete(a) {
-                                            Swal.fire({
-                                                title: '¿Estás seguro?',
-                                                text: "¡Esta acción elimina también los comentarios relacionados a este aviso, no se podrá revertir!",
-                                                icon: 'Precaución',
-                                                showCancelButton: true,
-                                                confirmButtonColor: '#d33',
-                                                cancelButtonColor: '#a9a9a9',
-                                                confirmButtonText: 'Si, eliminar',
-                                                cancelButtonText: 'Cancelar'
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    Swal.fire(
-                                                        '¡Eliminado!',
-                                                        'Tu archivo ha sido eliminado.',
-                                                        'success'
-                                                    )
-                                                    var url = "/eliminar/" + a;
-                                                    console.log(url);
-                                                    location.href = url;
-                                                }
-                                            })
-                                        }
-                                    </script>
-                                    <!-- ALERTA POR SI EL USUARIO QUIERE ELIMINAR ALGÚN AVISO -->
-                                    <% }); %>
+                                    <% avisos.forEach(aviso => { %>
+                                        <tr>
+                                            <td>
+                                                <%= aviso.titulo %>
+                                            </td>
+                                            <td class="ocultar">
+                                                <%= aviso.descripcion %>
+                                            </td>
+                                            <td class="ocultar">
+                                                <%= aviso.fechaPublicacion %>
+                                            </td>
+                                            <td class="ocultar">
+                                                <%= aviso.fechaModificacion %>
+                                            </td>
+                                            <td class="text-center">
+                                                <a title="Editar" class="btn btn-outline-warning" href="/obtenerID/<%= aviso.titulo_id %>">
+                                                    <h5>📝</h5>
+                                                </a>
+                                                <a title="Eliminar" class="btn btn-outline-danger" style="cursor: pointer;" onclick="confirmarDelete('<%= aviso.titulo_id %>')">
+                                                    <h5>❌</h5>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                                <!-- ALERTA POR SI EL USUARIO QUIERE ELIMINAR ALGÚN AVISO -->
+                                <script>
+                                    function confirmarDelete(a) {
+                                        Swal.fire({
+                                            title: '¿Estás seguro?',
+                                            text: "¡Esta acción elimina el aviso permanentemente!",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#d33',
+                                            cancelButtonColor: '#a9a9a9',
+                                            confirmButtonText: 'Si, eliminar',
+                                            cancelButtonText: 'Cancelar'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                Swal.fire(
+                                                    '¡Eliminado!',
+                                                    'Tu aviso ha sido eliminado.',
+                                                    'success'
+                                                )
+                                                var url = "/eliminar/" + a;
+                                                console.log(url);
+                                                location.href = url;
+                                            }
+                                        })
+                                    }
+                                </script>
+                                <!-- ALERTA POR SI EL USUARIO QUIERE ELIMINAR ALGÚN AVISO -->
+                                <% }); %>
                             </table>
                         </div>
                     </div>
