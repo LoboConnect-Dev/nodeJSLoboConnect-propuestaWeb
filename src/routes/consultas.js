@@ -69,6 +69,7 @@ ruta.post('/altaAviso', (req, res) => {
                 "titulo_id": uuidv4(),
                 "fechaModificacion": currentDate,
                 "fechaPublicacion": currentDate,
+                "fechaParaOrdenar": new Date().toString(),
                 "titulo": titulo,
                 "descripcion": descripcion,
                 "exist": "true",
